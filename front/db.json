@@ -1,0 +1,31 @@
+{
+  "flights": [
+    {
+      "Airline_Company_Id": "23",
+      "Origin_Country_Id": "4",
+      "Destenation_Country_Id": "5",
+      "Remaining_Ticets": "6",
+      "Departure_Time": "2022-08-12-18:23",
+      "Landing_Time": "2022-08-30-22:20",
+      "id": 1
+    },
+    {
+      "Airline_Company_Id": "1",
+      "Origin_Country_Id": "1",
+      "Destenation_Country_Id": "3",
+      "Remaining_Ticets": "43",
+      "Departure_Time": "2022-08-04-18:44",
+      "Landing_Time": "2022-08-17-16:47",
+      "id": 5
+    },
+    {
+      "Airline_Company_Id": "233",
+      "Origin_Country_Id": "4",
+      "Destenation_Country_Id": "5",
+      "Remaining_Ticets": "6",
+      "Departure_Time": "2022-08-16-21:59",
+      "Landing_Time": "2022-08-10-22:59",
+      "id": 6
+    }
+  ]
+}
