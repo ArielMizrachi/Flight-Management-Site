@@ -1,0 +1,19 @@
+[
+    {
+        "model": "base.Countries",
+        "pk": 1,
+        "fields" :{
+            "name":"Ireland",
+            "flag":"no idea"
+        }},
+    {
+   
+        "model": "base.Countries",
+        "pk": 2,
+        "fields" :{
+            "name":"Isreal",
+            "flag":"blue"
+        }
+    }
+
+]
