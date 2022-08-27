@@ -18,7 +18,7 @@ export function GetOneFlight(flight_id) {
   );
 }
 
-// add a glight
+  // add a flight
 export function AddFlight(new_flight) {
   token =  localStorage.getItem("token");
   return new Promise((resolve) =>
@@ -29,7 +29,7 @@ export function AddFlight(new_flight) {
     }).then((res) => resolve({ data: res.data }))
 
     .catch(error => {
-       resolve({data: error.response.status })
+      resolve({ data: error.response.status })
     }));
   
 }
@@ -67,3 +67,6 @@ export function UpdateFlight(NewFlight,id) {
     );
   }
   
+
+
+

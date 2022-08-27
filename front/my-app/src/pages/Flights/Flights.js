@@ -9,6 +9,7 @@ import Grid from '@mui/material/Grid';
 // redux
 import { useSelector, useDispatch } from 'react-redux'
 import {GetFlightsAsync,  AllFlights} from '../../redux/Flights/FlightSlice'
+import {CheckLogged} from '../../redux/LoginNRegister/LoginSlice'
 
 // comp
 import FlightTable from '../../components/FlightTable';
@@ -24,8 +25,10 @@ const Flights = () => {
   const dispatch = useDispatch()
 
 
+   // make sure the if the user is looged or not
   useEffect(() => {
     dispatch(GetFlightsAsync());
+    dispatch(CheckLogged());
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

@@ -75,8 +75,8 @@ export const FlightSlice = createSlice({
   name: "flight",
   initialState,
   reducers: {
-          MReverseTime: (state,action)=>{
-            console.log(action.payload)
+          ErrorCalibration: (state,action)=>{
+            state.error_checker = null
         }
   },
 
@@ -103,21 +103,23 @@ export const FlightSlice = createSlice({
 
       // adds a flight
       .addCase(AddFlightAsync.fulfilled, (state, action) => {
-       if(typeof action.payload !== 'number') {
-        state.flights.push(action.payload);
-       }
-       else{
-          // console.log('you made it')
-          // console.log(action.payload)
+        if(typeof action.payload !== 'number'){
+          state.flights.push(action.payload);
+          state.error_checker='good'
+        }
+        else {
           state.error_checker=ErrorHandler(action.payload)
           console.log(state.error_checker)
-       }
+
+        }
+  
       })
 
       // delete from list
       .addCase(DeleteFlightAsync.fulfilled, (state, action) => {
         state.flights = state.flights.filter(flight=> flight.id !==  action.payload);
     })
+      
     
     }, 
 
@@ -129,5 +131,5 @@ export const AllFlights = (state) => state.flight.flights;
 export const SelectFlights = (state) => state.flight.status;
 export const SelectOneFlight = (state) => state.flight.my_one_flight;
 export const ErrorFlight = (state) => state.flight.error_checker;
-export const {MReverseTime} = FlightSlice.actions
+export const {ErrorCalibration} = FlightSlice.actions
 export default FlightSlice.reducer;

@@ -1,8 +1,9 @@
-import React, { useState} from 'react'
+import React, { useState, useEffect} from 'react'
 
 // redux
 import {useDispatch, useSelector} from "react-redux";
 import {SelectOneFlight, UpdateFlightAsync} from '../../redux/Flights/FlightSlice'
+import {CheckLogged} from '../../redux/LoginNRegister/LoginSlice'
 
 // material ui
 import TextField from '@mui/material/TextField';
@@ -31,6 +32,12 @@ const UpdateFlights = () => {
     const [landing_time, SetLandingTime] = useState('')
 
     let navigate = useNavigate()
+
+     // make sure the if the user is looged or not
+    useEffect(() => {
+        dispatch(CheckLogged());
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, []);
 
     return (
         <div>

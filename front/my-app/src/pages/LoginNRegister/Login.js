@@ -11,8 +11,9 @@ import Typography from '@mui/material/Typography';
 import { LoginAsync } from '../../redux/LoginNRegister/LoginSlice'
 import { useDispatch } from "react-redux";
 
+
 // router import
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 
 
@@ -26,6 +27,8 @@ const Login = () => {
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
+  let chk_relogin = useParams()
+console.log(chk_relogin.note)
   return (
     <div>
 

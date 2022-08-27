@@ -38,6 +38,7 @@ root.render(
           <Route path="AddFlights" element={<AddFlights />} />
           <Route path="UpdateFlight" element={<UpdateFlight />} />
           <Route path="Login" element={<Login />} />
+          <Route path="Login/:note" element={<Login />} />
         </Route>
         <Route path="*" element={<Error404 />} />
         
