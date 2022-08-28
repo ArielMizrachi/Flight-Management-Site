@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import ErrorHandler from "../ErrorHandler";
+import ErrorHandler from '../ErrorHandler'
 import { GetFlights, AddFlight, DeleteFlight, GetOneFlight, UpdateFlight} from "./FlightAPI";
+
+
 
 
 
@@ -8,7 +10,7 @@ import { GetFlights, AddFlight, DeleteFlight, GetOneFlight, UpdateFlight} from "
 const initialState = {
   status: "idle",
   flights: [],
-  my_one_flight: '',
+  my_one_flight: 'null',
   error_checker:null,
 };
 
@@ -75,9 +77,10 @@ export const FlightSlice = createSlice({
   name: "flight",
   initialState,
   reducers: {
-          ErrorCalibration: (state,action)=>{
+          FlightErrorCalibration: (state,action)=>{
             state.error_checker = null
-        }
+        },
+        
   },
 
   // extra 
@@ -115,6 +118,19 @@ export const FlightSlice = createSlice({
   
       })
 
+      // update a flight
+      .addCase(UpdateFlightAsync.fulfilled, (state, action) => {
+        if(typeof action.payload !== 'number'){
+          state.error_checker='good'
+        }
+        else {
+          state.error_checker=ErrorHandler(action.payload)
+          console.log(state.error_checker)
+
+        }
+  
+      })
+
       // delete from list
       .addCase(DeleteFlightAsync.fulfilled, (state, action) => {
         state.flights = state.flights.filter(flight=> flight.id !==  action.payload);
@@ -131,5 +147,6 @@ export const AllFlights = (state) => state.flight.flights;
 export const SelectFlights = (state) => state.flight.status;
 export const SelectOneFlight = (state) => state.flight.my_one_flight;
 export const ErrorFlight = (state) => state.flight.error_checker;
-export const {ErrorCalibration} = FlightSlice.actions
+export const NewFlight = (state) => state.flight.new_flight;
+export const {FlightErrorCalibration} = FlightSlice.actions
 export default FlightSlice.reducer;

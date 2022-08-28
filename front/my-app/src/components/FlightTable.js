@@ -67,7 +67,7 @@ export default function FlightTable({all_flights}) {
               <Button align='left'
                       variant="contained"
                       onClick={()=>{dispatch(GetOneFlightAsync(flight.id));
-                                    setTimeout(() => navigate("/UpdateFlight"), 50)}}>
+                                    setTimeout(() => navigate(`/UpdateFlight/${flight.id}`), 50)}}>
                         update
               </Button>
               

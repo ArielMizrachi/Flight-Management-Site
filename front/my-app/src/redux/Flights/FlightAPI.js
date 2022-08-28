@@ -62,7 +62,7 @@ export function UpdateFlight(NewFlight,id) {
       }).then((res) => resolve({ data: res.data }))
   
       .catch(error => {
-        console.log(error.message)
+        resolve({ data: error.response.status })
       })
     );
   }

@@ -8,9 +8,9 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 // redux import
-import {AddFlightAsync, ErrorFlight, ErrorCalibration} from '../../redux/Flights/FlightSlice'
+import {AddFlightAsync, ErrorFlight, FlightErrorCalibration} from '../../redux/Flights/FlightSlice'
 import {useDispatch, useSelector} from "react-redux";
-import {CheckLogged} from '../../redux/LoginNRegister/LoginSlice'
+import {LogOut} from '../../redux/LoginNRegister/LoginSlice'
 
 // router import
 import { useNavigate } from "react-router-dom";
@@ -27,7 +27,6 @@ const AddFlights = () => {
     const [departure_time, SetDepartureTime] = useState('')
     const [landing_date, SetLandingDate] = useState('')
     const [landing_time, SetLandingTime] = useState('')
-    // const [error_msg, SetError] = useState(null)
 
     const dispatch = useDispatch();
     let navigate = useNavigate();
@@ -35,10 +34,9 @@ const AddFlights = () => {
     const error_chk =useSelector(ErrorFlight)
     
 
-    // make sure the if the user is looged or not
+    // remove error if page refreshed
     useEffect(() => {
-        dispatch(CheckLogged());
-        dispatch(ErrorCalibration())
+        dispatch(FlightErrorCalibration())
       // eslint-disable-next-line react-hooks/exhaustive-deps
       }, []);
 
@@ -46,11 +44,13 @@ const AddFlights = () => {
     //   check if the flight was implemnted correctly
     useEffect(() => {
         if (error_chk === 'good'){
-            dispatch(ErrorCalibration())
-            navigate("/Flights")
-        }  
+            dispatch(FlightErrorCalibration())
+            navigate("/Flights" ,{state:{msg: `The Flight from ${origin_country} to ${destenation_country} was added to the database` }})
+        } 
+        // in case of 401 
         if (error_chk === 'Please login again'){
-            dispatch(ErrorCalibration())
+            dispatch(FlightErrorCalibration())
+            dispatch(LogOut())
             navigate("/Login/401")
         } 
         // eslint-disable-next-line react-hooks/exhaustive-deps     
@@ -67,7 +67,7 @@ const AddFlights = () => {
                     </Grid>
 
                     <Grid item xs={12}>
-                        <Typography variant="h6" component="div" gutterBottom color={'red'}>{error_chk}</Typography>
+                        <Typography  component="div" gutterBottom color={'red'}>{error_chk}</Typography>
                     </Grid>
 
                     <Grid item xs={12}>

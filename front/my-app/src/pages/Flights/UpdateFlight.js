@@ -1,9 +1,9 @@
-import React, { useState, useEffect} from 'react'
+import React, {useState, useEffect} from 'react'
 
 // redux
 import {useDispatch, useSelector} from "react-redux";
-import {SelectOneFlight, UpdateFlightAsync} from '../../redux/Flights/FlightSlice'
-import {CheckLogged} from '../../redux/LoginNRegister/LoginSlice'
+import {SelectOneFlight, UpdateFlightAsync, ErrorFlight, FlightErrorCalibration} from '../../redux/Flights/FlightSlice'
+import {LogOut} from '../../redux/LoginNRegister/LoginSlice'
 
 // material ui
 import TextField from '@mui/material/TextField';
@@ -13,14 +13,16 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 // route import
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 import ReverseTime from '../../components/ReverseTime';
 
 const UpdateFlights = () => {
 
-    const flight = useSelector(SelectOneFlight)
+    let navigate = useNavigate()
     const dispatch = useDispatch();
+    const flight = useSelector(SelectOneFlight)
+    const error_chk =useSelector(ErrorFlight)
     
     const [company_id, SetCompanyId] = useState(flight.airline_company)
     const [origin_country_id, SetOriginCountryId] = useState(flight.origin_country)
@@ -31,13 +33,31 @@ const UpdateFlights = () => {
     const [landing_date, SetLandingDate] = useState('')
     const [landing_time, SetLandingTime] = useState('')
 
-    let navigate = useNavigate()
 
-     // make sure the if the user is looged or not
+    // return to the flight page if refreshed or entered without a flight
+  useEffect(() => {
+    if (flight === 'null'){
+        navigate("/Flights")
+    }
+    // calibration of the error
+    dispatch(FlightErrorCalibration())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+    //   check if the flight was implemnted correctly
     useEffect(() => {
-        dispatch(CheckLogged());
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, []);
+        if (error_chk === 'good'){
+            dispatch(FlightErrorCalibration())
+            navigate("/Flights" ,{state:{msg: `Flight number ${flight.id} was updated successfully` }})
+        } 
+        // in case of 401 
+        if (error_chk === 'Please login again'){
+            dispatch(FlightErrorCalibration())
+            dispatch(LogOut())
+            navigate("/Login/401")
+        } 
+        // eslint-disable-next-line react-hooks/exhaustive-deps     
+    }, [error_chk]);  
 
     return (
         <div>
@@ -47,6 +67,10 @@ const UpdateFlights = () => {
                 <Grid container spacing={3} direction="column" alignItems="flex-start">
                     <Grid item xs={12}>
                         <Typography variant="h5" component="div" gutterBottom>Please updatate the following details</Typography>
+                    </Grid>
+
+                    <Grid item xs={12}>
+                        <Typography component="div" gutterBottom color={'red'}>{error_chk}</Typography>
                     </Grid>
 
                     <Grid item xs={12}>
@@ -99,9 +123,7 @@ const UpdateFlights = () => {
                                     "destenation_country": destenation_country_id,
                                     "remaining_ticets": tickets,
                                     "departure_time": `${departure_date} ${departure_time}`,
-                                    "landing_time": `${landing_date} ${landing_time}`}));
-
-                                    navigate("/Flights")}}>
+                                    "landing_time": `${landing_date} ${landing_time}`}));}}>
 
                                 update</Button>
                         </Grid>
@@ -114,3 +136,5 @@ const UpdateFlights = () => {
 }
 
 export default UpdateFlights
+
+// defaultValue={flight.remaining_ticets}

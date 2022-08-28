@@ -26,17 +26,14 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
     <React.StrictMode>
-
     <Provider store={store}>
-        
-{/* routes */}
       <Routes>
 
         <Route path="/" element={<App />} >
         <Route index element={<Home />} />
           <Route path="Flights" element={<Flights />} />
           <Route path="AddFlights" element={<AddFlights />} />
-          <Route path="UpdateFlight" element={<UpdateFlight />} />
+          <Route path="UpdateFlight/:id" element={<UpdateFlight />} />
           <Route path="Login" element={<Login />} />
           <Route path="Login/:note" element={<Login />} />
         </Route>
