@@ -16,19 +16,24 @@ json-server --watch db.json --port=3005
 - update error implementation-Done
 - get uselocation to work-Done
 - show update and adding in the table-Done 
+- learn mui more - Done ish
+- add a trash can icon - Done
 
 
 #  goals
-- add permisson (staff, admin, guest, customer, user) -Kinda
-- learn mui more
 - build register
-- build country
+- build country - update -add -delet -picture
 - build airline company
+- add to flight roll down foe both country and airline company
+
+
 - build user profile
-
-
-# more goals
-- copy and paste the rest of the site
+- add permisson (staff, admin, guest, customer, user) -Kinda
 - add image possability
+
+
+
+# maybe  goals
+
 - fix tickets
 - cry - Done +++

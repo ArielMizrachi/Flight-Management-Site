@@ -63,6 +63,7 @@ export const LoginSlice = createSlice({
           state.error_checker= 'good'
       }
       else {
+        console.log(action.payload)
         state.error_checker=ErrorHandler(action.payload)
         console.log(state.error_checker)
 

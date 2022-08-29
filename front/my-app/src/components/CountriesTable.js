@@ -15,16 +15,14 @@ import {styled} from '@mui/system';
 
 // redux
 import {useDispatch} from "react-redux";
-import {DeleteFlightAsync, GetOneFlightAsync} from '../redux/Flights/FlightSlice'
+import {DeleteCountryAsync, GetOneCountryAsync} from '../redux/Countries/CountriesSlice'
 
 // router
 import { useNavigate } from "react-router-dom";
 
 
 
-export default function FlightTable({all_flights}) {
-
-
+export default function CountriesTable({all_countries}) {
 
   const dispatch = useDispatch();
   let navigate = useNavigate();
@@ -47,13 +45,9 @@ export default function FlightTable({all_flights}) {
                           
           {/* table headers */}
           <TableRow>
-            <TableCellHead align='left'>flight id</TableCellHead>
-            <TableCellHead align='left'>company id</TableCellHead>
-            <TableCellHead align='left'>origin country id</TableCellHead>
-            <TableCellHead align='left'>destination country id</TableCellHead>
-            <TableCellHead align='left'>departure time</TableCellHead>
-            <TableCellHead align='left'>landing time</TableCellHead>
-            <TableCellHead align='left'>ticets remaining</TableCellHead>
+            <TableCellHead align='left'>country id</TableCellHead>
+            <TableCellHead align='left'>country name</TableCellHead>
+            <TableCellHead align='left'>country flag</TableCellHead>
             <TableCell></TableCell>
             <TableCell></TableCell>
           </TableRow>
@@ -61,24 +55,18 @@ export default function FlightTable({all_flights}) {
 
         {/* table contents */}
         <TableBody>
-          {all_flights.map((flight, ind) => (
+          {all_countries.map((country, ind) => (
             <TableRow key={ind} 
-                      sx={{ border: 1.5,
-                          background: ind%2 ===0 ? '#d9eefa' : ''
-                          }}>
-              <TableCell component="th" scope="row">{flight.id}</TableCell>
-              <TableCell align='left'>{flight.airline_company}</TableCell>
-              <TableCell align='left'>{flight.origin_country}</TableCell>
-              <TableCell align='left'>{flight.destenation_country}</TableCell>
-              <TableCell align='left'>{flight.departure_time}</TableCell>
-              <TableCell align='left'>{flight.landing_time}</TableCell>
-              <TableCell align='left'>{flight.remaining_ticets}</TableCell>
+                      sx={{ border: 1.5}}>
+              <TableCell component="th" scope="row">{country.id}</TableCell>
+              <TableCell align='left'>{country.name}</TableCell>
+              <TableCell align='left'>{country.flag}</TableCell>
               <TableCell align='left'>
               <Button align='left'
                       variant="contained"
                       sx={{color:'white', background:'#5B5EA6'}}
-                      onClick={()=>{dispatch(GetOneFlightAsync(flight.id));
-                                    setTimeout(() => navigate(`/UpdateFlight/${flight.id}`), 50)}}>
+                      onClick={()=>{dispatch(GetOneCountryAsync(country.id));
+                                    setTimeout(() => navigate(`/UpdateCountry/${country.id}`), 50)}}>
                         update
               </Button>
               
@@ -87,7 +75,7 @@ export default function FlightTable({all_flights}) {
               <IconButton align='left'
                       variant="contained" 
                       color='error' 
-                      onClick={()=>dispatch(DeleteFlightAsync(flight.id))}>
+                      onClick={()=>dispatch(DeleteCountryAsync(country.id))}>
                         <DeleteIcon />
               </IconButton>
               </TableCell>

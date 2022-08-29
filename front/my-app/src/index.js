@@ -15,6 +15,10 @@ import Flights from "./pages/Flights/Flights";
 import AddFlights from './pages/Flights/AddFlights';
 import UpdateFlight from './pages/Flights/UpdateFlight';
 
+import Countries from "./pages/Countries/Countries";
+import AddCountries from './pages/Countries/AddCountry';
+import UpdateCountries from './pages/Countries/UpdateCountry';
+
 import Login from "./pages/LoginNRegister/Login";
 
 // redux
@@ -31,9 +35,18 @@ root.render(
 
         <Route path="/" element={<App />} >
         <Route index element={<Home />} />
+
+        {/* flights url */}
           <Route path="Flights" element={<Flights />} />
           <Route path="AddFlights" element={<AddFlights />} />
           <Route path="UpdateFlight/:id" element={<UpdateFlight />} />
+
+          {/* flights url */}
+          <Route path="Countries" element={<Countries />} />
+          <Route path="AddCountry" element={<AddCountries />} />
+          <Route path="UpdateCountry/:id" element={<UpdateCountries />} />
+
+        {/* login and refister url */}
           <Route path="Login" element={<Login />} />
           <Route path="Login/:note" element={<Login />} />
         </Route>

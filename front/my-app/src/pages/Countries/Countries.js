@@ -8,10 +8,10 @@ import Typography from '@mui/material/Typography';
 
 // redux
 import { useSelector, useDispatch } from 'react-redux'
-import {GetFlightsAsync,  AllFlights, } from '../../redux/Flights/FlightSlice'
+import {GetCountriesAsync, AllCountries} from '../../redux/Countries/CountriesSlice'
 
 // comp
-import FlightTable from '../../components/FlightTable';
+import CountriesTable from '../../components/CountriesTable';
 
 // router import
 import {useLocation} from "react-router-dom";
@@ -20,25 +20,26 @@ import {useLocation} from "react-router-dom";
 
 
 
-const Flights = () => {
+const Countries = () => {
 
-  const all_flights =useSelector(AllFlights)
+  const all_countries =useSelector(AllCountries)
   const dispatch = useDispatch()
   const location = useLocation()
 
    // get all of the flights
   useEffect(() => {
-    dispatch(GetFlightsAsync());
+    dispatch(GetCountriesAsync());
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
+
     <div>
       <Grid container spacing={2} >
 
       <Grid item xs={12} container >
          <Button variant="contained" style={{color: 'white', background:'#88B04B', marginTop: 12 }}>
-        <Link to="/AddFlights" style={{color: 'white', textDecoration: 'none'}}>add a flight</Link>
+        <Link to="/AddCountry" style={{color: 'white', textDecoration: 'none'}}>add a country</Link>
         </Button>
       </Grid>
 
@@ -50,13 +51,10 @@ const Flights = () => {
 
       {/* showing all the flights */}
         <Grid item xs={10}>
-        <FlightTable all_flights={all_flights}/>
+        <CountriesTable all_countries={all_countries}/>
         </Grid>
 
-       </Grid> 
-      
-
-      
+       </Grid>
 
         
 
@@ -64,4 +62,4 @@ const Flights = () => {
   )
 }
 
-export default Flights
+export default Countries

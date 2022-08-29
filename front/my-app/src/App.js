@@ -1,9 +1,13 @@
-import MyNav from "./components/MyNav";
 import React, { useEffect } from 'react'
 import { Outlet } from "react-router-dom";
 import { useDispatch } from 'react-redux'
 import {CheckLogged} from './redux/LoginNRegister/LoginSlice'
+import Stack from '@mui/material/Stack';
 
+import MyNav from "./components/MyNav";
+import RightSide from "./components/RightSide";
+import LeftSide from "./components/LeftSide";
+import { Box } from '@mui/system';
 
 function App() {
 
@@ -17,10 +21,12 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
       <MyNav/>
-      <Outlet />
-      </header>
+    <Stack direction={'row'} spacing={2}>
+      <Box flex={1}><RightSide/></Box>
+      <Box flex={8}><Outlet /></Box>
+      <Box flex={1}><LeftSide/></Box>
+    </Stack> 
     </div>
   );
 }

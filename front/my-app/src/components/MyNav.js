@@ -26,8 +26,8 @@ const MyNav = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="sticky"
-              sx={{ flexGrow: 1, color: '#008B8B', backgroundColor: '#F0FFFF', borderColor: '#008B8B' }}>
-        <Toolbar>
+              sx={{ flexGrow: 1, color: '#008B8B', backgroundColor: '#34568B', borderColor: '#008B8B' }}>
+        <Toolbar variant="dense">
           <IconButton
             size="large"
             edge="start"
@@ -38,22 +38,27 @@ const MyNav = () => {
             <MenuIcon />
           </IconButton>
 
-          <Typography color="inherit" sx={{ margin: 2 }}>
-            <Link to="/">home</Link>
+          <Typography color="inherit" sx={{ marginRight: 2 }}>
+            <Link style={{textDecoration: 'none'}} to="/">home</Link>
           </Typography>
 
-          <Typography color="inherit" sx={{ flexGrow: 1 }}>
-            <Link to="/Flights">Flights</Link>
+          <Typography  color="inherit" sx={{ marginRight: 2 }}>
+            <Link style={{textDecoration: 'none'}} to="/Countries">Countries</Link>
           </Typography>
+
+          <Typography  color="inherit" sx={{ flexGrow: 1 }}>
+            <Link style={{textDecoration: 'none'}} to="/Flights">Flights</Link>
+          </Typography>
+
 
           {/* checking if looged in */}
           {token?
           <Typography color="inherit">
-            <Link to="/" onClick={()=>setTimeout(() =>dispatch(LogOut()),200)}>sign out</Link>
+            <Link style={{textDecoration: 'none'}} to="/" onClick={()=>setTimeout(() =>dispatch(LogOut()),200)}>sign out</Link>
           </Typography>
             :
           <Typography color="inherit" >
-            <Link to="/Login">Login</Link>
+            <Link style={{textDecoration: 'none'}} to="/Login">Login</Link>
           </Typography>
           }
         </Toolbar>
