@@ -39,7 +39,7 @@ root.render(
         {/* flights url */}
           <Route path="Flights" element={<Flights />} />
           <Route path="AddFlights" element={<AddFlights />} />
-          <Route path="UpdateFlight/:id" element={<UpdateFlight />} />
+          <Route path="UpdateFlight" element={<UpdateFlight />} />
 
           {/* flights url */}
           <Route path="Countries" element={<Countries />} />

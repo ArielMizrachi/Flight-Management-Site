@@ -25,3 +25,4 @@ python manage.py migrate
   "landing_hour": "03:55",
   "Remaining_ticets": 123
 }
+

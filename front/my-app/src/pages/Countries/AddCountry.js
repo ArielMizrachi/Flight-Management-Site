@@ -37,6 +37,7 @@ const AddCountry = () => {
     //   check if the flight was implemnted correctly
     useEffect(() => {
         if (error_chk === 'good'){
+            console.log(flag)
             dispatch(CountryErrorCalibration())
             navigate("/Countries" ,{state:{msg: `The country ${name} was added to the database` }})
         } 
@@ -49,6 +50,13 @@ const AddCountry = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps     
       }, [error_chk]);
     
+    const HandleSubmit = () => {
+        console.log(name, flag);
+        let form_data = new FormData();
+        form_data.append("name", name, );
+        form_data.append("flag", flag);
+        dispatch(AddCountryAsync(form_data))    
+    }
 
     return (
         <div>
@@ -68,17 +76,20 @@ const AddCountry = () => {
                             onChange={(evt) => SetName(evt.target.value)} />
                     </Grid>
                     <Grid item xs={12}>
-                        <TextField id="outlined-basic" variant="outlined" label="flag"
-                            onChange={(evt) => SetFlag(evt.target.value)} />
+                    <Button variant="contained" 
+                            component="label" 
+                            style={{color: 'white', background:'#5B5EA6'}}
+                            onChange={(evt)=>SetFlag(evt.target.files[0])}>
+                            Upload country flag
+                            <input hidden accept="image/*" multiple type="file" />
+                     </Button>
                     </Grid>
 
                     <Grid item xs={12} container>
                         <Grid item xs={10}></Grid>
                         <Grid item xs={2} >
                             <Button variant="contained"
-                                onClick={() =>{dispatch(AddCountryAsync({
-                                    "name": name,
-                                    "flag": flag,}));}}>
+                                onClick={() =>HandleSubmit()}>
 
                                 submit</Button>
                         </Grid>
@@ -95,3 +106,4 @@ export default AddCountry
 
 
 
+// onClick={() =>{HandleSubmit()}}>

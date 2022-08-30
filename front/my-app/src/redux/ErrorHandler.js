@@ -10,6 +10,10 @@ let  msg = ''
     msg= 'Unable to continue with the provided credentials.'
     return (msg)
 }
+if (number === 1){
+  msg= 'please insert a file.'
+  return (msg)
+}
   if (number === 2){
   msg= 'there is already a name like that.'
   return (msg)

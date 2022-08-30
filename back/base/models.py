@@ -7,8 +7,9 @@ from datetime import datetime , date
 class Countries(models.Model):
     id=models.AutoField(primary_key=True,editable=False)
     name = models.CharField(max_length=50,blank=True,null=True,unique=True)
-    flag = models.CharField(max_length=50,blank=True,null=True,unique=True)
-    # flag = models.ImageField(null=True,blank=True,default='/placeholder.png')
+    flag = models.ImageField(null=True,blank=True,default='/placeholder.png')
+    # flag = models.CharField(max_length=50,blank=True,null=True,unique=True)
+    
 
     fields =['id','name','flag']
     def __str__(self):

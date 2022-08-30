@@ -14,16 +14,15 @@ class CountriesSerializer(serializers.ModelSerializer):
         return {
             "id": obj.id,
             "name": obj.name,
-            "flag": obj.flag,
+            "flag": str(obj.flag),
             }
 
     def GetCountryById(self,id):
         country= Countries.objects.get(id = id)
-        print(country.flag)
         return {
             "id": country.id,
             "name": country.name,
-            "flag": country.flag,
+            "flag":str(country.flag),
             }
 
     def GetAllCountries(self):
@@ -31,3 +30,4 @@ class CountriesSerializer(serializers.ModelSerializer):
         for Country in Countries.objects.all(): 
             res.append(self.GetCountry(Country))
         return res
+      

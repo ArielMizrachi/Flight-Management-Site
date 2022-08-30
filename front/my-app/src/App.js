@@ -1,13 +1,23 @@
 import React, { useEffect } from 'react'
-import { Outlet } from "react-router-dom";
-import { useDispatch } from 'react-redux'
-import {CheckLogged} from './redux/LoginNRegister/LoginSlice'
-import Stack from '@mui/material/Stack';
 
+// router imports
+import { Outlet } from "react-router-dom";
+import {CheckLogged} from './redux/LoginNRegister/LoginSlice'
+
+// redux imports
+import { useDispatch } from 'react-redux'
+
+// mui imports
+import Stack from '@mui/material/Stack';
+import { Box } from '@mui/system';
+
+// commponents imports
 import MyNav from "./components/MyNav";
 import RightSide from "./components/RightSide";
 import LeftSide from "./components/LeftSide";
-import { Box } from '@mui/system';
+
+// my css imports
+import './css/MyCss.css'
 
 function App() {
 

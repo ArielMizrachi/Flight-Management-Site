@@ -78,7 +78,7 @@ export default function FlightTable({all_flights}) {
                       variant="contained"
                       sx={{color:'white', background:'#5B5EA6'}}
                       onClick={()=>{dispatch(GetOneFlightAsync(flight.id));
-                                    setTimeout(() => navigate(`/UpdateFlight/${flight.id}`), 50)}}>
+                                    setTimeout(() => navigate(`/UpdateFlight`), 50)}}>
                         update
               </Button>
               

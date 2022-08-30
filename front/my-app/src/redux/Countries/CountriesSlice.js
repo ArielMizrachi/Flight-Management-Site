@@ -10,7 +10,7 @@ import { GetCountries, AddCountry, DeleteCountry, GetOneCountry, UpdateCountry} 
 const initialState = {
   countries: [],
   error_checker:null,
-  my_one_country: null,
+  my_one_country:'null',
 };
 
 // async functions
@@ -55,13 +55,10 @@ export const DeleteCountryAsync = createAsyncThunk(
 // update country
 export const UpdateCountryAsync = createAsyncThunk(
   "country/UpdateCountry",
-  async (country) => {
-    let NewBody = {
-      "name": country.name,
-      "flag": country.flag,
-    };
-    let id = country.id;
-    const response = await UpdateCountry (NewBody, id);
+  async (data) => { 
+    console.log('slice up') 
+    const response = await UpdateCountry (data.form_data, data.id);
+    console.log('slice down') 
     return response.data;
   }
 );

@@ -1,9 +1,6 @@
 import React from 'react'
 import { Link } from "react-router-dom";
 
-// my css imports
-import '../css/MyLink.css'
-
 // mui imports
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';

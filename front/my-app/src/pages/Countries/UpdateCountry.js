@@ -15,7 +15,6 @@ import Typography from '@mui/material/Typography';
 // route import
 import {useNavigate} from "react-router-dom";
 
-import ReverseTime from '../../components/ReverseTime';
 
 const UpdateCountry = () => {
 
@@ -25,24 +24,25 @@ const UpdateCountry = () => {
     const error_chk =useSelector(ErrorCountry)
     
     const [name, SetName] = useState(country.name)
-    const [flag, SetFlag] = useState(country.flag)
-   
+    const [flag, SetFlag] = useState('')
+    
 
     // return to the flight page if refreshed or entered without a flight
-  useEffect(() => {
-    if (country === 'null'){
-        navigate("/Countries")
-    }
-    // calibration of the error
-    dispatch(CountryErrorCalibration())
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    useEffect(() => {
+        if (country === 'null'){
+            navigate("/Countries")
+        }
+        // calibration of the error
+        dispatch(CountryErrorCalibration())
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, []);
+    
 
     //   check if the flight was implemnted correctly
     useEffect(() => {
         if (error_chk === 'good'){
             dispatch(CountryErrorCalibration())
-            navigate("/Countries" ,{state:{msg: `country ${country.name} was updated successfully` }})
+            navigate("/Countries" ,{state:{msg: `country ${name} was updated successfully` }})
         } 
         // in case of 401 
         if (error_chk === 'Please login again'){
@@ -52,6 +52,14 @@ const UpdateCountry = () => {
         } 
         // eslint-disable-next-line react-hooks/exhaustive-deps     
     }, [error_chk]);  
+
+    const HandleSubmit = () => {
+        let id = country.id
+        let form_data = new FormData();
+        form_data.append("name", name);
+        form_data.append("flag", flag);
+        dispatch(UpdateCountryAsync({form_data, id}))    
+    }
 
     return (
         <div>
@@ -72,8 +80,13 @@ const UpdateCountry = () => {
                             onChange={(evt) => SetName(evt.target.value)} />
                     </Grid>
                     <Grid item xs={12}>
-                        <TextField id="outlined-basic" variant="outlined" label="origin country id" defaultValue={country.flag}
-                            onChange={(evt) => SetFlag(evt.target.value)} />
+                    <Button variant="contained" 
+                            component="label" 
+                            style={{color: 'white', background:'#5B5EA6'}}
+                            onChange={(evt)=>SetFlag(evt.target.files[0])}>
+                            Upload country flag
+                            <input hidden accept="image/*" multiple type="file" />
+                     </Button>
                     </Grid>
                     
 
@@ -81,10 +94,7 @@ const UpdateCountry = () => {
                         <Grid item xs={10}></Grid>
                         <Grid item xs={2} >
                             <Button variant="contained"
-                                onClick={() => {dispatch(UpdateCountryAsync({
-                                    "id":country.id,
-                                    "name": name,
-                                    "flag": flag,}));}}>
+                                  onClick={() =>HandleSubmit()}>
 
                                 update</Button>
                         </Grid>

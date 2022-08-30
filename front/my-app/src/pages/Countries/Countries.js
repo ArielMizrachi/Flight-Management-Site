@@ -11,7 +11,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import {GetCountriesAsync, AllCountries} from '../../redux/Countries/CountriesSlice'
 
 // comp
-import CountriesTable from '../../components/CountriesTable';
+import CountriesTable from '../../components/CountriesCards';
 
 // router import
 import {useLocation} from "react-router-dom";
@@ -29,6 +29,7 @@ const Countries = () => {
    // get all of the flights
   useEffect(() => {
     dispatch(GetCountriesAsync());
+    console.log('hello')
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

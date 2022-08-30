@@ -1,4 +1,7 @@
+from email.policy import default
+from logging import PlaceHolder
 from rest_framework.response import Response
+from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from django.core.exceptions import ObjectDoesNotExist
@@ -23,7 +26,6 @@ def GetRoutes(request):
 
 # getting all of the countries 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
 def GetCountries(request,id=-1):
 
     if int(id) > -1:
@@ -41,13 +43,23 @@ def GetCountries(request,id=-1):
 # add country
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def AddCountries(request): 
-    try:
-         Countries.objects.create(name=request.data['name'] ,flag=request.data['flag'])
-         return Response({"POST":request.data['name']})
-
-    except IntegrityError as e:
-        return Response(str(e))
+def AddCountries(request):
+        newdict = request.data.dict()
+        if newdict['name'] == '':
+            return Response(400)      
+        try:
+            if newdict['flag'] == '':
+                Countries.objects.create(name=newdict['name'])                           
+                return Response({"POST":newdict['name']})
+            else:
+                Countries.objects.create(name=newdict['name'],
+                                             flag=newdict['flag'])                           
+                return Response({"POST":newdict['name']})   
+        except IntegrityError as e:
+            print (e)
+            if (str(e) == "UNIQUE constraint failed: base_countries.name"):
+                return Response (2)  
+        return Response(999)  
 
 
 # delete country
@@ -56,6 +68,9 @@ def AddCountries(request):
 def DelCountries(request,id=-1): 
     try:
         temp= Countries.objects.get(id = id)
+        if temp.flag:
+            if temp.flag != '/placeholder.png': 
+               temp.flag.delete()
         temp.delete()
         return Response({'DELETE': id})
 
@@ -68,19 +83,24 @@ def DelCountries(request,id=-1):
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def PutCountries(request,id=-1):
+    newdict = request.data.dict()
+    temp=Countries.objects.get(id = id)
 
+    if newdict['name'] == '':
+                return Response(400)      
     try:
-        # creation of temp country   
-        temp=Countries.objects.get(id = id)
-
-        temp.name =request.data['name']
-        temp.flag =request.data['flag']
-        temp.save()
-        return Response({'PUT IN': id})
-
-    except ObjectDoesNotExist as e:
-            return Response(str(e))    
-
+        if newdict['flag'] == '':
+            temp.name =request.data['name'] 
+            temp.save()                          
+            return Response({'PUT IN': id})
+        else:
+            temp.name =request.data['name']
+            temp.flag =request.data['flag']                           
+            temp.save()
+            return Response({'PUT IN': id})   
     except IntegrityError as e:
-        return Response(str(e))
+            print (e)
+            if (str(e) == "UNIQUE constraint failed: base_countries.name"):
+                return Response (2)  
+    return Response(999)  
     
