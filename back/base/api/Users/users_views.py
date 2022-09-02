@@ -17,14 +17,23 @@ def GetRoutes(request):
         'RegisterUser/',
         'DelUser/',
         'PutUser/',
+        'GetUsersName/',
     ]
  
     return Response(routes)
  
+# get users name
+@api_view(['GET'])
+def GetUsersName(request):
+        try:
+            # get specific user
+            return Response(UserSerializer().GetAllUsersName())
+
+        except ObjectDoesNotExist as e:
+            return Response(str(e))
 
 # get users
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
 def GetUsers(request,id=-1):
 
     if int(id) > -1:
@@ -39,11 +48,15 @@ def GetUsers(request,id=-1):
 
 # add user
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
 def RegisterUser(request):
 
     try:  
+        if(request.data['username'] == ""
+           or request.data['password'] == ""
+           or request.data['email'] == "" ):
+            return Response(400) 
         # let django handle the password 
+        print(request.data)
         password = make_password(request.data['password']) 
         User.objects.create(username=request.data['username'] ,
                             password=password,
@@ -53,7 +66,9 @@ def RegisterUser(request):
         return Response({"add": request.data['username']})
 
     except IntegrityError as e:
-        return Response(str(e))
+        if (str(e) == "UNIQUE constraint failed: auth_user.username"):
+                return Response (2)  
+        return Response(str(e))  
 
     except ObjectDoesNotExist as e:
             return Response(str(e))       
@@ -77,7 +92,11 @@ def DelUser(request,id=-1):
 @permission_classes([IsAuthenticated])
 def PutUser(request,id=-1):
 
-    try:   
+    try: 
+        if(request.data['username'] == ""
+           or request.data['password'] == ""
+           or request.data['email'] == "" ):
+            return Response(400)   
         # creation of temp user
         temp=User.objects.get(id = id)
 
@@ -92,7 +111,9 @@ def PutUser(request,id=-1):
             return Response(str(e))    
 
     except IntegrityError as e:
-        return Response(str(e))
+        if (str(e) == "UNIQUE constraint failed: auth_user.username"):
+                return Response (2)  
+        return Response(str(e))  
     
 
 

@@ -55,17 +55,8 @@ export const DeleteFlightAsync = createAsyncThunk(
 // update flights
 export const UpdateFlightAsync = createAsyncThunk(
   "flight/UpdateFlight",
-  async (NewFlight) => {
-    let NewBody = {
-      "airline_company": NewFlight.airline_company,
-      "origin_country": NewFlight.origin_country,
-      "destenation_country": NewFlight.destenation_country,
-      "remaining_ticets": NewFlight.remaining_ticets,
-      "departure_time": NewFlight.departure_time,
-      "landing_time": NewFlight.landing_time,
-    };
-    let id = NewFlight.id;
-    const response = await UpdateFlight(NewBody, id);
+  async (data) => { 
+    const response = await UpdateFlight (data.flight_data, data.id);
     return response.data;
   }
 );
@@ -147,6 +138,6 @@ export const AllFlights = (state) => state.flight.flights;
 export const SelectFlights = (state) => state.flight.status;
 export const SelectOneFlight = (state) => state.flight.my_one_flight;
 export const ErrorFlight = (state) => state.flight.error_checker;
-export const NewFlight = (state) => state.flight.new_flight;
+// export const NewFlight = (state) => state.flight.new_flight;
 export const {FlightErrorCalibration} = FlightSlice.actions
 export default FlightSlice.reducer;

@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react'
 // redux
 import {useDispatch, useSelector} from "react-redux";
 import {SelectOneCountry, UpdateCountryAsync, ErrorCountry, CountryErrorCalibration} from '../../redux/Countries/CountriesSlice'
-import {LogOut} from '../../redux/LoginNRegister/LoginSlice'
+import {LogOut} from '../../redux/Login/LoginSlice'
 
 // material ui
 import TextField from '@mui/material/TextField';

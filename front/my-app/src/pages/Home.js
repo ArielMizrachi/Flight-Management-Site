@@ -1,7 +1,7 @@
 import React from 'react'
 
 // import Button from '@mui/material/Button';
-import {SelectToken, SelectStaff, SelectUser} from '../redux/LoginNRegister/LoginSlice'
+import {SelectToken, SelectStaff, SelectUser} from '../redux/Login/LoginSlice'
 import { useSelector} from 'react-redux'
 
 

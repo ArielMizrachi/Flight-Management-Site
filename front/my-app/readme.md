@@ -20,48 +20,37 @@ json-server --watch db.json --port=3005
 - add a trash can icon - Done
 - build country
 - add image possability-Done
+- make counry cards- Done
+- fix flights url +flight update-Done
+- build airline company- Done
+- build user name only - Done
+- build airline name only - Done
+- build country name only- Done
+- add checkbox to airlines- Done
+- add checkbox to flights- Done
+- build register + user - Done
+- build tickets -Done
 
 
 #  goals
-- make counry cards
-- build register
-- build airline company
-- add to flight roll down foe both country and airline company
-- fix flights url +flight update
-
-- build user profile
-- add permisson (staff, admin, guest, customer, user) -Kinda
-
-
+- build profile 
+- fix tickets purchase
+- add profile color for diffrent user level
+- add tickets to airlines for user
+- add tickets to airlines for airlines
 
 
 # maybe  goals
 
+- add permisson (staff, admin, guest, customer, user) -Kinda
+- build another verefication before send (login,flights,countries,airlines)-kinda need to check 
+- add more profil options
+- fix time in update flight
+- fix error handler in site
+- fix update photo
 - fix tickets
 - cry - Done +++
 
-
-import React from 'react'
-
-// material ui
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
-import {styled} from '@mui/system';
-
-// redux
-import {useDispatch} from "react-redux";
-import {DeleteCountryAsync, GetOneCountryAsync} from '../redux/Countries/CountriesSlice'
-
-// router
-import { useNavigate } from "react-router-dom";
 
 
 

@@ -16,6 +16,8 @@ import {styled} from '@mui/system';
 // redux
 import {useDispatch} from "react-redux";
 import {DeleteFlightAsync, GetOneFlightAsync} from '../redux/Flights/FlightSlice'
+import {AddTicketAsync} from '../redux/Tickets/TicketSlice'
+
 
 // router
 import { useNavigate } from "react-router-dom";
@@ -56,6 +58,7 @@ export default function FlightTable({all_flights}) {
             <TableCellHead align='left'>ticets remaining</TableCellHead>
             <TableCell></TableCell>
             <TableCell></TableCell>
+            <TableCell></TableCell>
           </TableRow>
         </TableHead>
 
@@ -73,6 +76,21 @@ export default function FlightTable({all_flights}) {
               <TableCell align='left'>{flight.departure_time}</TableCell>
               <TableCell align='left'>{flight.landing_time}</TableCell>
               <TableCell align='left'>{flight.remaining_ticets}</TableCell>
+
+              {/* buying a ticket */}
+              <TableCell align='left'>
+              <Button align='left'
+                      variant="contained"
+                      sx={{color:'white', background:'#5B5EA6'}}
+                      onClick={()=>{dispatch(AddTicketAsync(({
+                                              "flights_id": flight.id,
+                                              "customer_id": 1,})))
+                                    setTimeout(() => navigate(`/Flights`), 50)}}>
+                        purchase
+              </Button>
+              
+              </TableCell>
+
               <TableCell align='left'>
               <Button align='left'
                       variant="contained"
@@ -80,9 +98,9 @@ export default function FlightTable({all_flights}) {
                       onClick={()=>{dispatch(GetOneFlightAsync(flight.id));
                                     setTimeout(() => navigate(`/UpdateFlight`), 50)}}>
                         update
-              </Button>
-              
+              </Button>              
               </TableCell>
+
               <TableCell align='left'>
               <IconButton align='left'
                       variant="contained" 
@@ -91,6 +109,7 @@ export default function FlightTable({all_flights}) {
                         <DeleteIcon />
               </IconButton>
               </TableCell>
+
             </TableRow>
           ))}
         </TableBody>

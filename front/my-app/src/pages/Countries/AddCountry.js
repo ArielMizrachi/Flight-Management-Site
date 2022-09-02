@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 // redux import
 import {AddCountryAsync, ErrorCountry, CountryErrorCalibration} from '../../redux/Countries/CountriesSlice'
 import {useDispatch, useSelector} from "react-redux";
-import {LogOut} from '../../redux/LoginNRegister/LoginSlice'
+import {LogOut} from '../../redux/Login/LoginSlice'
 
 // router import
 import { useNavigate } from "react-router-dom";
@@ -51,7 +51,6 @@ const AddCountry = () => {
       }, [error_chk]);
     
     const HandleSubmit = () => {
-        console.log(name, flag);
         let form_data = new FormData();
         form_data.append("name", name, );
         form_data.append("flag", flag);

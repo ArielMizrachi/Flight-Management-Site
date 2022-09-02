@@ -19,10 +19,20 @@ def GetRoutes(request):
         'AddCountries/',
         'DelCountries/',
         'PutCountries/',
+        'GetCountriesName/',
     ]
  
     return Response(routes)
  
+# get countries name
+@api_view(['GET'])
+def GetCountriesName(request):
+        try:
+            # get specific user
+            return Response(CountriesSerializer().GetAllCountriesName())
+
+        except ObjectDoesNotExist as e:
+            return Response(str(e)) 
 
 # getting all of the countries 
 @api_view(['GET'])

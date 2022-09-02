@@ -31,6 +31,13 @@ class AirlineCompaniesSerializer(serializers.ModelSerializer):
 
     def GetAllAirlines(self):
         res=[] 
-        for Country in Airline_Companies.objects.all(): 
-            res.append(self.GetAirline(Country))
+        for airline in Airline_Companies.objects.all(): 
+            res.append(self.GetAirline(airline))
         return res
+
+
+    def GetAllAirlinesName(self):
+        res=[] 
+        for airline in Airline_Companies.objects.all(): 
+            res.append(airline.name)
+        return res    

@@ -21,8 +21,8 @@ class Countries(models.Model):
 class Airline_Companies(models.Model):
     id=models.AutoField(primary_key=True,editable=False)
     name = models.CharField(max_length=50,null=True,blank=True,unique=True)
-    country = models.ForeignKey(Countries,on_delete=models.SET_NULL,null=True)
-    user = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
+    country = models.ForeignKey(Countries,on_delete=models.CASCADE,null=True)
+    user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
 
     fields =['id','name','country','user']
     def __str__(self):
@@ -32,9 +32,9 @@ class Airline_Companies(models.Model):
 
 class Flights(models.Model):
     id=models.AutoField(primary_key=True,editable=False)
-    airline_company =models.ForeignKey(Airline_Companies,on_delete=models.SET_NULL,null=True)
-    origin_country = models.ForeignKey(Countries,on_delete=models.SET_NULL,null=True,related_name='origin_country')
-    destenation_country = models.ForeignKey(Countries,on_delete=models.SET_NULL,null=True,related_name='destenation_country')
+    airline_company =models.ForeignKey(Airline_Companies,on_delete=models.CASCADE,null=True)
+    origin_country = models.ForeignKey(Countries,on_delete=models.CASCADE,null=True,related_name='origin_country')
+    destenation_country = models.ForeignKey(Countries,on_delete=models.CASCADE,null=True,related_name='destenation_country')
     departure_time=models.DateTimeField(auto_now_add=False,auto_now=False)   
     landing_time=models.DateTimeField(auto_now_add=False,auto_now=False)
     remaining_ticets=models.IntegerField(null=True,blank=True)
@@ -63,8 +63,8 @@ class Customers(models.Model):
 
 class Tickets(models.Model):
     id=models.AutoField(primary_key=True,editable=False)
-    flight = models.ForeignKey(Flights,on_delete=models.SET_NULL,null=True)
-    customer = models.ForeignKey(Customers,on_delete=models.SET_NULL,null=True)
+    flight = models.ForeignKey(Flights,on_delete=models.CASCADE,null=True)
+    customer = models.ForeignKey(Customers,on_delete=models.CASCADE,null=True)
 
     fields =['id','flight','customer']
     def __str__(self):

@@ -18,6 +18,13 @@ export function GetOneCountry(Country_id) {
   );
 }
 
+// get all Countrys names
+export function GetCountriesName() {
+  return new Promise((resolve) =>
+    axios(MY_SERVER+'GetCountriesName/').then((res) => resolve({ data: res.data }))
+  );
+}
+
   // add a Country
 export function AddCountry(new_Country) {
   token =  localStorage.getItem("token");

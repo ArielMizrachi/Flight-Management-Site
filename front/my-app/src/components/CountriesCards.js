@@ -46,7 +46,7 @@ export default function CountriesCards({all_countries}) {
                       variant="contained"
                       sx={{color:'white', background:'#5B5EA6'}}
                       onClick={()=>{dispatch(GetOneCountryAsync(country.id));
-                                    setTimeout(() => navigate(`/UpdateCountry/${country.id}`), 50)}}>
+                                    setTimeout(() => navigate(`/UpdateCountry`), 50)}}>
                         update
               </Button>
               <IconButton align='left'

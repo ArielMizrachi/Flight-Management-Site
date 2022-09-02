@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import ErrorHandler from '../ErrorHandler'
-import { GetCountries, AddCountry, DeleteCountry, GetOneCountry, UpdateCountry} from "./CountriesAPI";
+import { GetCountries, AddCountry, DeleteCountry, GetOneCountry, UpdateCountry, GetCountriesName} from "./CountriesAPI";
 
 
 
@@ -11,6 +11,7 @@ const initialState = {
   countries: [],
   error_checker:null,
   my_one_country:'null',
+  country_names:[]
 };
 
 // async functions
@@ -29,6 +30,15 @@ export const GetOneCountryAsync = createAsyncThunk(
   "country/GetOneCountry",
   async (country_id) => {
     const response = await GetOneCountry(country_id);
+    return response.data;
+  }
+);
+
+// get all of the countries names
+export const GetCountriesNamesAsync = createAsyncThunk(
+  "country/GetCountriesName",
+  async () => {
+    const response = await GetCountriesName();
     return response.data;
   }
 );
@@ -56,9 +66,7 @@ export const DeleteCountryAsync = createAsyncThunk(
 export const UpdateCountryAsync = createAsyncThunk(
   "country/UpdateCountry",
   async (data) => { 
-    console.log('slice up') 
     const response = await UpdateCountry (data.form_data, data.id);
-    console.log('slice down') 
     return response.data;
   }
 );
@@ -88,6 +96,12 @@ export const CountriesSlice = createSlice({
       // gets one Country
       .addCase(GetOneCountryAsync.fulfilled, (state, action) => {
         state.my_one_country = action.payload
+    
+      })
+
+      // gets all countries name
+      .addCase(GetCountriesNamesAsync.fulfilled, (state, action) => {
+        state.country_names = action.payload
     
       })
 
@@ -131,6 +145,7 @@ export const CountriesSlice = createSlice({
 
 });
 
+export const CountriesNames = (state) => state.country.country_names;
 export const SelectOneCountry = (state) => state.country.my_one_country;
 export const AllCountries = (state) => state.country.countries;
 export const ErrorCountry = (state) => state.country.error_checker;

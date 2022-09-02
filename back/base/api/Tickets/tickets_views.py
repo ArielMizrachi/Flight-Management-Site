@@ -23,7 +23,6 @@ def GetRoutes(request):
 
 # getting all of the customers 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
 def GetTickets(request,id=-1):
 
     if int(id) > -1:

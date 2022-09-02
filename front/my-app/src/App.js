@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 
 // router imports
 import { Outlet } from "react-router-dom";
-import {CheckLogged} from './redux/LoginNRegister/LoginSlice'
+import {CheckLogged} from './redux/Login/LoginSlice'
 
 // redux imports
 import { useDispatch } from 'react-redux'

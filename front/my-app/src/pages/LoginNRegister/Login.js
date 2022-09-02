@@ -8,12 +8,11 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 // redux import
-import { LoginAsync } from '../../redux/LoginNRegister/LoginSlice'
 import {useSelector, useDispatch} from "react-redux";
-import {ErrorLoginNRegister, LNRErrorCalibration} from '../../redux/LoginNRegister/LoginSlice'
+import {ErrorLoginNRegister, LNRErrorCalibration, LoginAsync } from '../../redux/Login/LoginSlice'
 
 // router import
-import { useNavigate, useParams} from "react-router-dom";
+import { useNavigate, useParams, Link} from "react-router-dom";
 
 
 
@@ -27,12 +26,14 @@ const Login = () => {
   const [user_username, SetUser] = useState('')
   const [user_password, SetPassword] = useState('')
 
+  const [usernameverifier, SetUserVeryfier] = useState(false)
+  const [passwordverifier, SetPasswordVeryfier] = useState(false)
+
   // checking if ut was sent here form another page
   let params = useParams()
   const [chk_login, SetLogin] = useState(params)
 
   const error_chk =useSelector(ErrorLoginNRegister)
-    
 
   // remove error if page refreshed
   useEffect(() => {
@@ -57,10 +58,22 @@ const Login = () => {
       // eslint-disable-next-line react-hooks/exhaustive-deps     
     }, [error_chk]);
 
+    const HandleSubmit = () => {
+      let chk = 0
+      //varifacation before sending to the server
+      if (user_username === '') {SetUserVeryfier('please insert a name');chk=chk+1} 
+                           else {SetUserVeryfier(false)}
+      if (user_password === '') {SetPasswordVeryfier('please insert a password'); chk=chk+1} 
+                           else {SetPasswordVeryfier(false)}
+    // if there are no chk problems send it to the server
+    if (chk === 0 ){    
+    dispatch(LoginAsync({"username":user_username,"password":user_password}))
+    }
+  }
+
+
   return (
     <div>
-      {/* {chk_login.note} */}
-
         <Grid container spacing={3} direction="column"  justifyContent="center" alignItems="center">
           
         <Paper sx={{ p: 10, margin: '30px', maxWidth: 500, flexGrow: 1}}>
@@ -74,32 +87,47 @@ const Login = () => {
             <Typography  component="div" gutterBottom color={'red'}>Please login again</Typography>
           </Grid>
           }
-
-          <Grid item xs={12}>
-            <Typography component="div" gutterBottom color={'red'}>{error_chk}</Typography>
+          <Grid item xs={12}>  
+            <Typography component="div" gutterBottom color={'red'}>
+              { usernameverifier === false && passwordverifier === false ? error_chk : ""}
+              </Typography>
           </Grid>
 
           <Grid item xs={12}>
             <TextField id="outlined-basic" variant="outlined" label="Username"
               onChange={(evt) => SetUser(evt.target.value)} />
+
+              {usernameverifier !== false &&
+              <Typography  component="div" gutterBottom color={'red'}>{usernameverifier}</Typography>
+              }
+
           </Grid>
+
           <Grid item xs={12}>
             <TextField id="outlined-basic" variant="outlined" label="Password"
-              onChange={(evt) => SetPassword(evt.target.value)} />
+              onChange={(evt) =>SetPassword(evt.target.value)} />
+
+              {passwordverifier !== false &&
+              <Typography  component="div" gutterBottom color={'red'}>{passwordverifier}</Typography>
+              }
+
           </Grid>
+
           <Grid item xs={12} container>
             <Grid item xs={10}></Grid>
             <Grid item xs={2} >
 
               <Button variant="contained"
-                onClick={() => {
-                  dispatch(LoginAsync({"username":user_username,"password":user_password}));
-                  // setTimeout(() =>navigate("/"),100)
-                }}>
+                onClick={() => {HandleSubmit()}}>
 
                 Login
               </Button>
             </Grid>
+          </Grid>
+          <Grid item xs={12}  justifyContent="flex-start" alignItems="flex-end">
+            <Typography  component="div" gutterBottom>dont have an acount? create one 
+               <Link style={{color: 'blue'}} to="/Register"> here</Link>
+            </Typography>
           </Grid>
           </Paper>
         </Grid>

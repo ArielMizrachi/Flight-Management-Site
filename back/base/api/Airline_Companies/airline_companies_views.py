@@ -16,14 +16,23 @@ def GetRoutes(request):
         'AddAirline/',
         'DelAirline/',
         'PutAirline/',
+        'GetAirlinesName/',
     ]
  
     return Response(routes)
- 
+
+# get airlines name
+@api_view(['GET'])
+def GetAirlinesName(request):
+        try:
+            # get specific user
+            return Response(AirlineCompaniesSerializer().GetAllAirlinesName())
+
+        except ObjectDoesNotExist as e:
+            return Response(str(e)) 
 
 # get airlines
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
 def GetAirlines(request,id=-1):
     if int(id) > -1:
         try: 
@@ -39,8 +48,10 @@ def GetAirlines(request,id=-1):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def AddAirline(request):
-
-    try:  
+    try: 
+        if(request.data['name'] == ""
+           or request.data['country'] == "" ):
+            return Response(400) 
         # getting the user from the request and country from db  
         country= Countries.objects.get(name = request.data['country'])
         user= request.user
@@ -49,10 +60,12 @@ def AddAirline(request):
         return Response({"add": request.data['name']})
 
     except IntegrityError as e:
-        return Response(str(e))
+            if (str(e) == "UNIQUE constraint failed: base_airline_companies.name"):
+                return Response (2)  
 
     except ObjectDoesNotExist as e:
-            return Response(str(e))       
+        print(e)
+        return Response(1)       
 
 # delete arieline
 @api_view(['DELETE'])
@@ -71,8 +84,10 @@ def DelAirline(request,id=-1):
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def PutAirline(request,id=-1):
-
     try:  
+        if(request.data['name'] == ""
+           or request.data['country'] == "" ):
+            return Response(400) 
         # creation of temp airline  
         temp=Airline_Companies.objects.get(id = id)
 
@@ -87,7 +102,8 @@ def PutAirline(request,id=-1):
             return Response(str(e))    
 
     except IntegrityError as e:
-        return Response(str(e))
+            if (str(e) == "UNIQUE constraint failed: base_airline_companies.name"):
+                return Response (2)  
     
 
 

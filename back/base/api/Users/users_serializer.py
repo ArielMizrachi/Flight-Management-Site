@@ -36,3 +36,11 @@ class UserSerializer(serializers.ModelSerializer):
          
             res.append(self.GetUser(user))
         return res
+
+
+    def GetAllUsersName(self):
+        res=[] 
+        for user in User.objects.all(): 
+         
+            res.append(user.username)
+        return res    

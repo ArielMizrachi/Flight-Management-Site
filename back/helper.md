@@ -3,6 +3,8 @@ python manage.py runserver
 python manage.py makemigrations
 python manage.py migrate
 
+python manage.py createsuperuser
+
 <!-- customer -->
 
 {
@@ -26,3 +28,5 @@ python manage.py migrate
   "Remaining_ticets": 123
 }
 
+{ "flights_id":"2", 
+"customer_id":"1" } 

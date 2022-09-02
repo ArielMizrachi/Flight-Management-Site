@@ -40,6 +40,12 @@ def GetFlight(request,id=-1):
 @permission_classes([IsAuthenticated])
 def AddFlights(request): 
     try:
+        if(request.data['airline_company'] == ""
+           or request.data['origin_country'] == "" 
+           or request.data['destenation_country'] == "" 
+           or len(request.data['landing_time']) == 1 
+           or len(request.data['departure_time']) == 1):
+            return Response(400)
         # getting all the forign keys elemnts
         airline_company= Airline_Companies.objects.get(name = request.data['airline_company'])
         origin_country= Countries.objects.get(name = request.data['origin_country'])
@@ -86,9 +92,14 @@ def DelFlights(request,id=-1):
 def PutFlight(request,id=-1):
 
     try:
+        if(request.data['airline_company'] == ""
+           or request.data['origin_country'] == "" 
+           or request.data['destenation_country'] == "" 
+           or len(request.data['landing_time']) == 1 
+           or len(request.data['departure_time']) == 1):
+            return Response(400)
         # creation of temp flight   
         temp=Flights.objects.get(id = id)
-
         # setting all the forign keys
         airline_company= Airline_Companies.objects.get(name = request.data['airline_company'])
         origin_country= Countries.objects.get(name = request.data['origin_country'])

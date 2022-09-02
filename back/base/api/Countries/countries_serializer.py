@@ -30,4 +30,10 @@ class CountriesSerializer(serializers.ModelSerializer):
         for Country in Countries.objects.all(): 
             res.append(self.GetCountry(Country))
         return res
-      
+
+    def GetAllCountriesName(self):
+        res=[] 
+        for Country in Countries.objects.all(): 
+            res.append(Country.name)
+        return res
+        

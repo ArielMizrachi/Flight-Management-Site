@@ -6,14 +6,17 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import Autocomplete from '@mui/material/Autocomplete';
 
 // redux import
 import {AddFlightAsync, ErrorFlight, FlightErrorCalibration} from '../../redux/Flights/FlightSlice'
+import {CountriesNames, GetCountriesNamesAsync} from '../../redux/Countries/CountriesSlice'
+import {AirlinesNames, GetAirlinesNamesAsync} from '../../redux/Airlines/AirlineSlice'
 import {useDispatch, useSelector} from "react-redux";
-import {LogOut} from '../../redux/LoginNRegister/LoginSlice'
+import {LogOut} from '../../redux/Login/LoginSlice'
 
 // router import
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import ReverseTime from '../../components/ReverseTime';
 
@@ -32,11 +35,16 @@ const AddFlights = () => {
     let navigate = useNavigate();
 
     const error_chk =useSelector(ErrorFlight)
+    const countries_names =useSelector(CountriesNames)
+    const airlines_names =useSelector(AirlinesNames)
     
 
-    // remove error if page refreshed
+    // remove error if page refreshed 
     useEffect(() => {
         dispatch(FlightErrorCalibration())
+        // get countries and airlines names
+        dispatch(GetCountriesNamesAsync())
+        dispatch(GetAirlinesNamesAsync())
       // eslint-disable-next-line react-hooks/exhaustive-deps
       }, []);
 
@@ -59,6 +67,8 @@ const AddFlights = () => {
 
     return (
         <div>
+            {JSON.stringify(countries_names)}
+            {JSON.stringify(airlines_names)}
             <Paper sx={{ p: 2, margin: '30px', maxWidth: 500, flexGrow: 1 }}>
 
                 <Grid container spacing={3} direction="column" alignItems="flex-start">
@@ -71,22 +81,65 @@ const AddFlights = () => {
                     </Grid>
 
                     <Grid item xs={12}>
-                        <TextField id="outlined-basic" variant="outlined" label="comany"
-                            onChange={(evt) => SetCompanyId(evt.target.value)} />
+                        {/*if there are any countries it will put them in a combo box if not it will send the to add flights*/}
+                   { airlines_names.length > 0 ?    
+                                <Autocomplete
+                                disablePortal
+                                id="combo-box-countries"
+                                options={airlines_names}
+                                sx={{ width: 225 }}
+                                onChange={(event, newValue) => {
+                                    SetCompanyId(newValue);
+                                }}
+                                renderInput={(params) => <TextField {...params} label="Airline" />}
+                                />
+                                :
+                                <Typography  component="div" gutterBottom color={'red'}>
+                                    there are no airlines avilable please go and add some <Link style={{color: 'blue'}} to="/Airlines">here</Link>
+                                    </Typography>
+                            }             
+                    </Grid>
+                    {/* set countries and direct to add countries if needed */}
+                { countries_names.length > 0 ? 
+                <Grid item xs={12} container spacing={2}>
+                    <Grid item xs={12} >
+                        <Autocomplete
+                                disablePortal
+                                id="combo-box-countries"
+                                options={countries_names}
+                                sx={{ width: 225 }}
+                                onChange={(event, newValue) => {
+                                    SetOriginCountryId(newValue);
+                                }}
+                                renderInput={(params) => <TextField {...params} label="take off country" />}
+                                />
+                                
                     </Grid>
                     <Grid item xs={12}>
-                        <TextField id="outlined-basic" variant="outlined" label="origin country"
-                            onChange={(evt) => SetOriginCountryId(evt.target.value)} />
-                    </Grid>
+                    <Autocomplete
+                            disablePortal
+                            id="combo-box-countries"
+                            options={countries_names}
+                            sx={{ width: 225 }}
+                            onChange={(event, newValue) => {
+                                SetDestenationCountryId(newValue);
+                            }}
+                            renderInput={(params) => <TextField {...params} label="landing country" />}
+                            />
+                            
+                </Grid>
+                </Grid>
+                       :
                     <Grid item xs={12}>
-                        <TextField id="outlined-basic" variant="outlined" label="destination country"
-                            onChange={(evt) => SetDestenationCountryId(evt.target.value)} />
+                            <Typography  component="div" gutterBottom color={'red'}>
+                            there are no counries avilable please go and add some <Link style={{color: 'blue'}} to="/Countries">here</Link>
+                            </Typography>
                     </Grid>
+                    }
                     <Grid item xs={12}>
-                        <TextField id="outlined-basic" variant="outlined" label="tickets"
+                        <TextField id="outlined-basic" variant="outlined" label="tickets" inputProps={{ maxLength: 3 }}
                             onChange={(evt) => SetTickets(evt.target.value)} />
                     </Grid>
-
                     <Grid item xs={12} container>
                         <Grid item xs={6}>
                             <TextField id="date" variant="outlined" type="date" InputLabelProps={{ shrink: true }} label="departure day"
@@ -113,7 +166,8 @@ const AddFlights = () => {
                         <Grid item xs={10}></Grid>
                         <Grid item xs={2} >
                             <Button variant="contained"
-                                onClick={() =>{dispatch(AddFlightAsync({
+                                    disabled={countries_names.length === 0 || airlines_names.length === 0}
+                                    onClick={() =>{dispatch(AddFlightAsync({
                                     "airline_company": company,
                                     "origin_country": origin_country,
                                     "destenation_country": destenation_country,

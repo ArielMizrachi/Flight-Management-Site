@@ -19,7 +19,16 @@ import Countries from "./pages/Countries/Countries";
 import AddCountries from './pages/Countries/AddCountry';
 import UpdateCountries from './pages/Countries/UpdateCountry';
 
+import Airlines from './pages/Airlines/Airlines'
+import AddAirlines from './pages/Airlines/AddAirlines'
+import UpdateAirlines from './pages/Airlines/UpdateAirlines'
+
 import Login from "./pages/LoginNRegister/Login";
+import Register from './pages/LoginNRegister/Register'
+import Users from './pages/Users/Users'
+import UpdateUser from './pages/Users/UpdateUser'
+
+import Tickets from './pages/Tickets/Tickets'
 
 // redux
 import {store} from './redux/store'
@@ -41,14 +50,25 @@ root.render(
           <Route path="AddFlights" element={<AddFlights />} />
           <Route path="UpdateFlight" element={<UpdateFlight />} />
 
-          {/* flights url */}
+          {/* countries url */}
           <Route path="Countries" element={<Countries />} />
           <Route path="AddCountry" element={<AddCountries />} />
-          <Route path="UpdateCountry/:id" element={<UpdateCountries />} />
+          <Route path="UpdateCountry" element={<UpdateCountries />} />
 
-        {/* login and refister url */}
+          {/* airlines url */}
+          <Route path="Airlines" element={<Airlines />} />
+          <Route path="AddAirline" element={<AddAirlines />} />
+          <Route path="UpdateAirline" element={<UpdateAirlines />} />
+
+          {/* ticket url */}
+          <Route path="Tickets" element={<Tickets />} />
+
+        {/* login and register url */}
           <Route path="Login" element={<Login />} />
           <Route path="Login/:note" element={<Login />} />
+          <Route path="Register" element={<Register />} />
+          <Route path="Users" element={<Users />} />
+          <Route path="UpdateUser" element={<UpdateUser />} />
         </Route>
         <Route path="*" element={<Error404 />} />
         
