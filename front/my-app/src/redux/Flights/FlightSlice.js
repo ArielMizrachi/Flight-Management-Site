@@ -101,11 +101,10 @@ export const FlightSlice = createSlice({
 
       // gets my flights
       .addCase(MyFlightsAsync.fulfilled, (state, action) => {
-        state.flights = action.payload
-      if (action.payload.length !== 0 ){
-        state.my_company = action.payload[0].airline_company
-      }
-        state.status = "done";
+        state.flights = action.payload.my_flights  
+        state.my_company = action.payload.company_name;
+        console.log(action.payload.my_flights)
+        console.log(action.payload.company_name)
       })
 
       // gets one flight

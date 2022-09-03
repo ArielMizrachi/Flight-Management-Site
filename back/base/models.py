@@ -8,9 +8,7 @@ class Countries(models.Model):
     id=models.AutoField(primary_key=True,editable=False)
     name = models.CharField(max_length=50,blank=True,null=True,unique=True)
     flag = models.ImageField(null=True,blank=True,default='/placeholder.png')
-    # flag = models.CharField(max_length=50,blank=True,null=True,unique=True)
     
-
     fields =['id','name','flag']
     def __str__(self):
      	   return self.name
@@ -22,7 +20,7 @@ class Airline_Companies(models.Model):
     id=models.AutoField(primary_key=True,editable=False)
     name = models.CharField(max_length=50,null=True,blank=True,unique=True)
     country = models.ForeignKey(Countries,on_delete=models.CASCADE,null=True)
-    user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+    user=models.OneToOneField(User,on_delete=models.CASCADE,null=True)
 
     fields =['id','name','country','user']
     def __str__(self):

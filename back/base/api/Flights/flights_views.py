@@ -43,7 +43,7 @@ def GetMyFlights(request):
         user= request.user 
         airline= Airline_Companies.objects.get(user = user)     
         try:
-            return Response(FlightsSerializer().GetMyFlights(airline))
+            return Response({"my_flights":FlightsSerializer().GetMyFlights(airline),"company_name":airline.name})
         except ObjectDoesNotExist as e:
             return Response(str(e))
 

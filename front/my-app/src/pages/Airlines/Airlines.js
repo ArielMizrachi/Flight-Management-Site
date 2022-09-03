@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 
 // redux
 import { useSelector, useDispatch } from 'react-redux'
-import {GetAirlineAsync, AllAirlines} from '../../redux/Airlines/AirlineSlice'
+import {GetAirlineAsync, AllAirlines } from '../../redux/Airlines/AirlineSlice'
 import {SelectSuper } from '../../redux/Login/LoginSlice'
 
 // comp
@@ -36,6 +36,7 @@ const Airlines = () => {
 
   return (
     <div>
+      <Typography variant="h2" component="div" gutterBottom color={'#0047b3'}>our amazing airlines</Typography>
       <Grid container spacing={2} >
       {is_super&&
       <Grid item xs={12} container >

@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import ErrorHandler from '../ErrorHandler'
-import { GetAirlines, AddAirline, DeleteAirline, GetOneAirline, UpdateAirline, GetAirlineNames} from "./AirlineAPI";
+import { GetAirlines, AddAirline, DeleteAirline, GetOneAirline, UpdateAirline, GetAirlineNames, IsAirline} from "./AirlineAPI";
 
 
 
@@ -10,6 +10,7 @@ import { GetAirlines, AddAirline, DeleteAirline, GetOneAirline, UpdateAirline, G
 const initialState = {
   airlines: [],
   my_one_airline: 'null',
+  is_airline: false,
   error_checker:null,
   airlines_names: [],
 };
@@ -39,6 +40,15 @@ export const GetAirlinesNamesAsync = createAsyncThunk(
   "country/GetAirlineNames",
   async () => {
     const response = await GetAirlineNames();
+    return response.data;
+  }
+);
+
+// checking for a airline
+export const CheckAirlineAsync = createAsyncThunk(
+  "flight/IsAirline",
+  async () => { 
+    const response = await IsAirline();
     return response.data;
   }
 );
@@ -80,7 +90,12 @@ export const AirlineSlice = createSlice({
           AirlineErrorCalibration: (state,action)=>{
             state.error_checker = null
         },
-        
+        IsNowAnAirline: (state,action)=>{
+          state.is_airline = true
+        },
+        NotAnAirline: (state,action)=>{
+          state.is_airline = false
+        },
   },
 
   // extra 
@@ -102,6 +117,13 @@ export const AirlineSlice = createSlice({
       .addCase(GetAirlinesNamesAsync.fulfilled, (state, action) => {
         state.airlines_names = action.payload
       })
+
+      // checks if customer
+      .addCase(CheckAirlineAsync.fulfilled, (state, action) => {
+        if(action.payload !== false){
+          state.is_airline = action.payload
+        }
+        })
 
       // adds a flight
       .addCase(AddAirlineAsync.fulfilled, (state, action) => {
@@ -144,7 +166,8 @@ export const AirlineSlice = createSlice({
 
 export const AirlinesNames = (state) => state.airline.airlines_names;
 export const AllAirlines = (state) => state.airline.airlines;
+export const MyAirline = (state) => state.airline.is_airline;
 export const SelectOneAirline = (state) => state.airline.my_one_airline;
 export const ErrorAirline = (state) => state.airline.error_checker;
-export const {AirlineErrorCalibration} = AirlineSlice.actions
+export const {AirlineErrorCalibration, IsNowAnAirline, NotAnAirline} = AirlineSlice.actions
 export default AirlineSlice.reducer;

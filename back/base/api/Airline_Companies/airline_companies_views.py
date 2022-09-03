@@ -17,6 +17,7 @@ def GetRoutes(request):
         'DelAirline/',
         'PutAirline/',
         'GetAirlinesName/',
+        'IsAirline/',
     ]
  
     return Response(routes)
@@ -43,6 +44,16 @@ def GetAirlines(request,id=-1):
     else:
         return Response(AirlineCompaniesSerializer().GetAllAirlines())
   
+  # check if he is a customer 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def IsAirline(request):
+        user= request.user
+        print(user)
+        print(hasattr(user, 'airline_companies'))
+        print(hasattr(user, 'customers'))
+        return Response(hasattr(user, 'airline_companies'))
+
 
 # add arieline
 @api_view(['POST'])

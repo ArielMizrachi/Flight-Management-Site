@@ -101,6 +101,7 @@ export const CustomerSlice = createSlice({
 
       // gets one customer
       .addCase(GetOneCustomerAsync.fulfilled, (state, action) => {
+        console.log(action.payload)
         state.my_one_customer = action.payload
 
       })

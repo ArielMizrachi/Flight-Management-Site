@@ -44,7 +44,7 @@ const UpdateUsers = () => {
     useEffect(() => {
         if (error_chk === 'good'){
             dispatch(UserErrorCalibration())
-            navigate("/Users" ,{state:{msg: `user number ${user.id} was updated successfully` }})
+            navigate("/" ,{state:{msg: `user number ${user.id} was updated successfully` }})
         }
         // in case of a user delete 
         if (error_chk === 'deleted'){

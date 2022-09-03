@@ -38,6 +38,7 @@ const Countries = () => {
   return (
 
     <div>
+            <Typography variant="h2" component="div" gutterBottom color={'#0047b3'}>our one of a kind countries</Typography>
       <Grid container spacing={2} >
     {is_super&&
       <Grid item xs={12} container >

@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import Autocomplete from '@mui/material/Autocomplete';
 
 // redux import
-import {AddAirlineAsync, ErrorAirline, AirlineErrorCalibration} from '../../redux/Airlines/AirlineSlice'
+import {AddAirlineAsync, ErrorAirline, AirlineErrorCalibration, IsNowAnAirline} from '../../redux/Airlines/AirlineSlice'
 import {CountriesNames, GetCountriesNamesAsync} from '../../redux/Countries/CountriesSlice'
 import {useDispatch, useSelector} from "react-redux";
 import {LogOut} from '../../redux/Login/LoginSlice'
@@ -42,7 +42,8 @@ const AddAirlines = () => {
     useEffect(() => {
         if (error_chk === 'good'){
             dispatch(AirlineErrorCalibration())
-            navigate("/Airlines" ,{state:{msg: `Airline ${name} was added to the database` }})
+            dispatch(IsNowAnAirline())
+            navigate("/" ,{state:{msg: `Airline ${name} was added to the database` }})
         } 
         // in case of 401 
         if (error_chk === 'Please login again'){

@@ -18,6 +18,21 @@ export function GetOneAirline(airline_id) {
   );
 }
 
+// check if airline
+export function IsAirline() {
+  token =  localStorage.getItem("token");
+  return new Promise((resolve) =>
+    axios(MY_SERVER+'IsAirline/', {
+      headers: {
+        Authorization: `Bearer ${token} `,
+      },
+    }).then((res) => resolve({ data: res.data }))
+    .catch(error => {
+      resolve({ data: error.response.status })
+    })
+  );
+}
+
 // get all airlines names
 export function GetAirlineNames() {
   return new Promise((resolve) =>

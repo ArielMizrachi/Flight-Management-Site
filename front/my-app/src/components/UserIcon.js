@@ -14,6 +14,8 @@ import {SelectStaff, SelectSuper, SelectId, SelectToken} from '../redux/Login/Lo
 import { useSelector, useDispatch} from 'react-redux'
 import {CheckCustomerAsync, MyCustomer, CustomerId, GetOneCustomerAsync} from '../redux/Customer/CustomersSlice'
 import {GetOneUserAsync} from '../redux/Users/UsersSlice'
+import {CheckAirlineAsync , MyAirline} from '../redux/Airlines/AirlineSlice'
+
 
 
 
@@ -30,6 +32,9 @@ const UserIcon = () => {
   const is_super = useSelector(SelectSuper)
   const user_id =useSelector(SelectId)
   const customer_id =useSelector(CustomerId)
+
+  // air line handling
+  const is_airline =useSelector(MyAirline)
 
   // customer handling
   const token =useSelector(SelectToken)
@@ -51,6 +56,7 @@ const UserIcon = () => {
   useEffect(() => {
     if (token){  
       dispatch(CheckCustomerAsync())
+      dispatch(CheckAirlineAsync());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -86,7 +92,7 @@ const UserIcon = () => {
         <MenuItem onClick={()=> {handleClose() ;
                                  navigate(`/Users`)}}>users</MenuItem>
         <MenuItem onClick={()=> {handleClose() ;
-                                 navigate(`/UpdateCountry`)}}>profiles</MenuItem>                         
+                                 navigate(`/Customers`)}}>profiles</MenuItem>                         
       </Menu>
     </Box>
     : is_staff?
@@ -111,8 +117,13 @@ const UserIcon = () => {
           'aria-labelledby': 'basic-button',
         }}
       >
+      {is_airline ?
         <MenuItem onClick={()=> {handleClose() ;
                                  navigate(`/MyFlights`)}}>my flights</MenuItem>
+        :                         
+        <MenuItem onClick={()=> {handleClose() ;
+                                 navigate(`/AddAirline`)}}>become an airline</MenuItem> 
+        }                                                   
       </Menu>
     </Box>
     :
@@ -140,10 +151,10 @@ const UserIcon = () => {
         
         <MenuItem onClick={()=> {handleClose() ;
                                  dispatch(GetOneUserAsync(user_id));
-                                 setTimeout(() => navigate(`/UpdateUser`), 50)}}>update user</MenuItem>
+                                 setTimeout(() => navigate(`/UpdateUser`), 100)}}>update user</MenuItem>
          {customer ? 
          <Box>                   
-        <MenuItem onClick={()=>{handleClose()
+        <MenuItem onClick={()=>{handleClose();
                                 dispatch(GetOneCustomerAsync(customer_id));
                                 setTimeout(() => navigate(`/UpdateCustomer`), 100)}}>update profile</MenuItem>
 

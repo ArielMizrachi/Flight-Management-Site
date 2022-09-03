@@ -8,7 +8,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 // redux import
-import {AddCustomerAsync, ErrorCustomer, CustomerErrorCalibration} from '../../redux/Customer/CustomersSlice'
+import {AddCustomerAsync, ErrorCustomer, CustomerErrorCalibration, CheckCustomerAsync} from '../../redux/Customer/CustomersSlice'
 import {useDispatch, useSelector} from "react-redux";
 import {LogOut} from '../../redux/Login/LoginSlice'
 import {IsNowACustomer} from '../../redux/Customer/CustomersSlice'
@@ -42,7 +42,9 @@ const AddCustomer = () => {
     useEffect(() => {
         if (error_chk === 'good'){
             dispatch(CustomerErrorCalibration())
+            // you need to check for the state of the customer id to change
             dispatch(IsNowACustomer())
+            dispatch(CheckCustomerAsync())
             navigate("/" ,{state:{msg: `Welcome our new customer ${first_name} ` }})
         } 
         // in case of 401 

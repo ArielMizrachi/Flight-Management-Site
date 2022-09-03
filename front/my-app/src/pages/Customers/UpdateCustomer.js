@@ -77,6 +77,7 @@ const UpdateCustomer = () => {
     
     return (
         <div>
+            {JSON.stringify(customer)}
 <Paper sx={{ p: 2, margin: '30px', maxWidth: 500, flexGrow: 1 }}>
 
 <Grid container spacing={3} direction="column" alignItems="flex-start">
