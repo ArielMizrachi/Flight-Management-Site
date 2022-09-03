@@ -5,6 +5,7 @@ import CountriesReducer from './Countries/CountriesSlice'
 import AirlinesReducer from './Airlines/AirlineSlice'
 import UserReducer from './Users/UsersSlice'
 import TicketReducer from './Tickets/TicketSlice'
+import CustomerReducer from './Customer/CustomersSlice'
 
 // import { combineReducers  } from 'redux'
 export const store = configureStore({
@@ -14,6 +15,7 @@ export const store = configureStore({
     country  : CountriesReducer,
     airline  : AirlinesReducer,
     user     : UserReducer,
-    ticket   : TicketReducer
+    ticket   : TicketReducer,
+    customer : CustomerReducer
   },
 });

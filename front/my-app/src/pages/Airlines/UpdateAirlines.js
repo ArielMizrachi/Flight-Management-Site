@@ -114,4 +114,3 @@ const UpdateAirlines = () => {
 
 export default UpdateAirlines
 
-// defaultValue={flight.remaining_ticets}

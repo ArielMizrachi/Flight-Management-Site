@@ -5,15 +5,14 @@ import { Link } from "react-router-dom";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import Typography from '@mui/material/Typography';
 
 // redux
 import {useDispatch, useSelector } from 'react-redux'
 import {LogOut} from '../redux/Login/LoginSlice'
-
 import { SelectToken} from '../redux/Login/LoginSlice'
+
+import UserIcon from './UserIcon';
 
 const MyNav = () => {
 
@@ -23,20 +22,17 @@ const MyNav = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="sticky"
-              sx={{ flexGrow: 1, color: 'red', backgroundColor: '#34568B', borderColor: '#008B8B' }}>
+              sx={{ flexGrow: 1, backgroundColor: '#34568B', borderColor: '#008B8B' }}>
         <Toolbar variant="dense">
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-
+        {token&&
+          <UserIcon/>
+        }
           <Typography color="inherit" sx={{ marginRight: 2 }}>
             <Link style={{textDecoration: 'none'}} to="/">home</Link>
+          </Typography>
+
+          <Typography color="inherit" sx={{ marginRight: 2 }}>
+            <Link style={{textDecoration: 'none'}} to="/Customers">customers</Link>
           </Typography>
 
           <Typography color="inherit" sx={{ marginRight: 2 }}>

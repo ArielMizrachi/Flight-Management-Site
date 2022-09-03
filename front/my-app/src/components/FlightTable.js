@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {  useEffect } from 'react'
 
 // material ui
 import Table from '@mui/material/Table';
@@ -14,10 +14,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import {styled} from '@mui/system';
 
 // redux
-import {useDispatch} from "react-redux";
+import {useDispatch,useSelector} from "react-redux";
 import {DeleteFlightAsync, GetOneFlightAsync} from '../redux/Flights/FlightSlice'
-import {AddTicketAsync} from '../redux/Tickets/TicketSlice'
-
+import {AddTicketAsync, ErrorUser, TicketErrorCalibration} from '../redux/Tickets/TicketSlice'
+import {LogOut} from '../redux/Login/LoginSlice'
 
 // router
 import { useNavigate } from "react-router-dom";
@@ -30,11 +30,27 @@ export default function FlightTable({all_flights}) {
 
   const dispatch = useDispatch();
   let navigate = useNavigate();
+  const error_chk =useSelector(ErrorUser)
 
   // custom table head color
   const TableCellHead = styled(TableCell)({
       color:'white'
   })
+
+ //   check if the flight was implemnted correctly
+ useEffect(() => {
+  if (error_chk === 'good'){
+      navigate("/" ,{state:{msg: `The Flight from was bought successfully` }})
+  } 
+  // in case of 401 
+  if (error_chk === 'Please login again'){
+      dispatch(TicketErrorCalibration())
+      dispatch(LogOut())
+      navigate("/Login/401")
+  } 
+  // eslint-disable-next-line react-hooks/exhaustive-deps     
+}, [error_chk]);
+
   return (
     <div>
 <TableContainer component={Paper}>
@@ -84,13 +100,13 @@ export default function FlightTable({all_flights}) {
                       sx={{color:'white', background:'#5B5EA6'}}
                       onClick={()=>{dispatch(AddTicketAsync(({
                                               "flights_id": flight.id,
-                                              "customer_id": 1,})))
-                                    setTimeout(() => navigate(`/Flights`), 50)}}>
+                                              "customer_id": 1,})))}}>
                         purchase
               </Button>
               
               </TableCell>
-
+                
+              {/* updating a flight */}
               <TableCell align='left'>
               <Button align='left'
                       variant="contained"
@@ -101,6 +117,7 @@ export default function FlightTable({all_flights}) {
               </Button>              
               </TableCell>
 
+              {/* deleting a flight */}
               <TableCell align='left'>
               <IconButton align='left'
                       variant="contained" 

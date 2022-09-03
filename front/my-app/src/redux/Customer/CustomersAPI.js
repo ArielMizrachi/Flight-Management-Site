@@ -2,33 +2,30 @@ import axios from "axios";
 // import TokenGiver from "../../components/TokenGiver";
 
 
-const MY_SERVER = "http://127.0.0.1:8000/api/airlines/";
+const MY_SERVER = "http://127.0.0.1:8000/api/customers/";
 let token =  null;
-// get all airlines
-export function GetAirlines() {
+// get all customers
+export function GetCustomers() {
   return new Promise((resolve) =>
-    axios(MY_SERVER+'GetAirlines/').then((res) => resolve({ data: res.data }))
+    axios(MY_SERVER+'GetCustomers/').then((res) => resolve({ data: res.data }))
   );
 }
 
-// get one airline
-export function GetOneAirline(airline_id) {
+// get one customer
+export function GetOneCustomer(customer_id) {
+  console.log(customer_id)
   return new Promise((resolve) =>
-    axios(MY_SERVER+'GetAirlines/'+airline_id).then((res) => resolve({ data: res.data }))
-  );
+    axios(MY_SERVER+'GetCustomers/'+customer_id)
+    .then((res) => resolve({ data: res.data }))
+    .catch(error => {resolve({ data: error.response.status })
+    }));
 }
 
-// get all airlines names
-export function GetAirlineNames() {
-  return new Promise((resolve) =>
-    axios(MY_SERVER+'GetAirlinesName/').then((res) => resolve({ data: res.data }))
-  );
-}
-  // add a airline
-export function AddAirline(new_airline) {
+  // add a customer
+export function AddCustomer(new_customer) {
   token =  localStorage.getItem("token");
   return new Promise((resolve) =>
-    axios.post(MY_SERVER+'AddAirline/', new_airline, {
+    axios.post(MY_SERVER+'AddCustomers/', new_customer, {
       headers: {
         Authorization: `Bearer ${token} `,
       },
@@ -40,11 +37,11 @@ export function AddAirline(new_airline) {
   
 }
 
-// delete a airline
-export function DeleteAirline(id) {
+// delete a customer
+export function DeleteCustomer(id) {
   token =  localStorage.getItem("token");
   return new Promise((resolve) =>
-    axios.delete(MY_SERVER+'DelAirline/'+ id, {
+    axios.delete(MY_SERVER+'DelCustomers/'+ id, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -56,12 +53,12 @@ export function DeleteAirline(id) {
   );
 }
 
-// update a airline
-export function UpdateAirline(NewAirline,id) {
+// update a customer
+export function UpdateCustomer(NewCustomer,id) {
   token =  localStorage.getItem("token");
   return new Promise((resolve) =>
     axios
-      .put(MY_SERVER+'PutAirline/' + id, NewAirline, {
+      .put(MY_SERVER+'PutCustomers/' + id, NewCustomer, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

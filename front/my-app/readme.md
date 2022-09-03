@@ -30,12 +30,14 @@ json-server --watch db.json --port=3005
 - add checkbox to flights- Done
 - build register + user - Done
 - build tickets -Done
+- fix tickets purchase - done
+- build mega user button - Done
+- add profile color and menu for diffrent user level - Done
+- build customer - Done
 
 
 #  goals
-- build profile 
-- fix tickets purchase
-- add profile color for diffrent user level
+- add customer log in first thing in the morning - fix it in app
 - add tickets to airlines for user
 - add tickets to airlines for airlines
 

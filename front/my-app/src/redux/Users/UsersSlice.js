@@ -83,7 +83,7 @@ export const UserSlice = createSlice({
       })
 
 
-      // gets one flight
+      // gets one user
       .addCase(GetOneUserAsync.fulfilled, (state, action) => {
         state.my_one_user = action.payload
 

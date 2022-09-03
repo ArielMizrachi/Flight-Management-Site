@@ -50,7 +50,6 @@ export function DeleteUser(id) {
 // update a user
 export function UpdateUser(NewUser,id) {
   token =  localStorage.getItem("token");
-  console.log('here')
   return new Promise((resolve) =>
     axios
       .put(MY_SERVER+'PutUser/' + id, NewUser, {

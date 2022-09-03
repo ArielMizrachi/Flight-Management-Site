@@ -9,6 +9,7 @@ import { GetTickets, AddTicket, DeleteTicket} from "./TicketAPI";
 // start value
 const initialState = {
   tickets: [],
+  error_checker:null,
 };
 
 // async functions
@@ -44,7 +45,13 @@ export const DeleteTicketAsync = createAsyncThunk(
 export const TicketSlice = createSlice({
   name: "ticket",
   initialState,
-  reducers: { },
+  reducers: {
+    TicketErrorCalibration: (state,action)=>{
+      state.error_checker = null
+  },
+  
+},
+  error_checker:null,
 
   // extra 
   extraReducers: (builder) => {
@@ -83,4 +90,5 @@ export const TicketSlice = createSlice({
 
 export const AllTickets = (state) => state.ticket.tickets;
 export const ErrorUser = (state) => state.ticket.error_checker;
+export const {TicketErrorCalibration} = TicketSlice.actions
 export default TicketSlice.reducer;

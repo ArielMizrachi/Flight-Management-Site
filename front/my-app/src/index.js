@@ -30,6 +30,10 @@ import UpdateUser from './pages/Users/UpdateUser'
 
 import Tickets from './pages/Tickets/Tickets'
 
+import Customers from './pages/Customers/Customers'
+import AddCustomer from './pages/Customers/AddCustomer'
+import UpdateCustomer from './pages/Customers/UpdateCustomer'
+
 // redux
 import {store} from './redux/store'
 import {Provider} from 'react-redux'
@@ -59,6 +63,11 @@ root.render(
           <Route path="Airlines" element={<Airlines />} />
           <Route path="AddAirline" element={<AddAirlines />} />
           <Route path="UpdateAirline" element={<UpdateAirlines />} />
+
+          {/* customers url */}
+          <Route path="Customers" element={<Customers />} />
+          <Route path="AddCustomer" element={<AddCustomer />} />
+          <Route path="UpdateCustomer" element={<UpdateCustomer />} />
 
           {/* ticket url */}
           <Route path="Tickets" element={<Tickets />} />

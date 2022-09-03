@@ -22,7 +22,6 @@ def GetRoutes(request):
 
 # getting all of the customers 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
 def GetCustomers(request,id=-1):
 
     if int(id) > -1:
@@ -40,7 +39,14 @@ def GetCustomers(request,id=-1):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def AddCustomers(request): 
+    print(type(request.data['phone_no']))
     try:
+        if(request.data['first_name'] == ""
+           or request.data['last_name'] == "" 
+           or request.data['address'] == "" 
+           or type(request.data['phone_no']) == 'int'
+           or request.data['credit_card_no'] == ""):
+            return Response(400)
         user= request.user
         Customers.objects.create(first_name=request.data['first_name'], 
                                  last_name=request.data['last_name'],
@@ -52,12 +58,16 @@ def AddCustomers(request):
         return Response({"POST":request.data['first_name']})
 
     except IntegrityError as e:
-        return Response(str(e))
+            if (str(e) == "UNIQUE constraint failed: base_customers.user_id"):
+                return Response (2)  
 
 # delete customer
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
-def DelCustomers(request,id=-1): 
+def DelCustomers(request,id=-1):
+    print('5555555555555555555555') 
+    print(id) 
+    print('5555555555555555555555') 
     try:
         temp= Customers.objects.get(id = id)
         temp.delete()
@@ -71,8 +81,14 @@ def DelCustomers(request,id=-1):
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def PutCustomers(request,id=-1):
-
+    print(request.data)
     try: 
+        if(request.data['first_name'] == ""
+           or request.data['last_name'] == "" 
+           or request.data['address'] == "" 
+           or type(request.data['phone_no']) == 'int'
+           or request.data['credit_card_no'] == ""):
+            return Response(400)
         # creation of temp customer   
         temp=Customers.objects.get(id = id)
 
