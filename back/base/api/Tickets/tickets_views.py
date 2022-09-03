@@ -16,6 +16,7 @@ def GetRoutes(request):
         'AddTickets/',
         'DelTicets/',
         'PutTickets/',
+        'GetCustomerTickets/',
     ]
  
     return Response(routes)
@@ -36,14 +37,30 @@ def GetTickets(request,id=-1):
         return Response(TicketsSerializer().GetAllTickets())
   
 
+# getting all of the customers 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def GetCustomerTickets(request):
+        try:
+            # customer tickets
+            user= request.user
+            customer= Customers.objects.get(user = user)            
+            return Response(TicketsSerializer().GetAllCustomerTickets(customer))
+        except ObjectDoesNotExist as e:
+            print(str(e))
+            return Response(str(e))
+
+
+
 # add a ticket
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def AddTickets(request): 
     try:
+        user= request.user
         # get the forigen key elemnts
         flight= Flights.objects.get(id = request.data['flights_id'])
-        customer= Customers.objects.get(id = request.data['customer_id'])
+        customer= Customers.objects.get(user = user)
 
         Tickets.objects.create(flight=flight,
                                customer=customer)

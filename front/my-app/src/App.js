@@ -3,11 +3,10 @@ import React, { useEffect } from 'react'
 // router imports
 import { Outlet } from "react-router-dom";
 import {CheckLogged} from './redux/Login/LoginSlice'
-import {CheckCustomerAsync} from './redux/Customer/CustomersSlice'
+
 
 // redux imports
-import { useDispatch, useSelector } from 'react-redux'
-import {SelectId} from './redux/Login/LoginSlice'
+import { useDispatch } from 'react-redux'
 
 // mui imports
 import Stack from '@mui/material/Stack';
@@ -24,12 +23,10 @@ import './css/MyCss.css'
 function App() {
 
   const dispatch = useDispatch()
-  const user_id = useSelector(SelectId)
 
   // make sure the if the user is looged or not
   useEffect(() => {
     dispatch(CheckLogged());
-    dispatch(CheckCustomerAsync(user_id))
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

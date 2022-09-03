@@ -38,3 +38,11 @@ class TicketsSerializer(serializers.ModelSerializer):
         for ticket in Tickets.objects.all(): 
             res.append(self.GetTicket(ticket))
         return res
+
+
+    def GetAllCustomerTickets(self,customer):
+        res=[] 
+        MyTickets = customer.tickets_set.all()
+        for ticket in MyTickets: 
+            res.append(self.GetTicket(ticket))
+        return res    

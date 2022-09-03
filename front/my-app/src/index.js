@@ -14,6 +14,8 @@ import Home from './pages/Home';
 import Flights from "./pages/Flights/Flights";
 import AddFlights from './pages/Flights/AddFlights';
 import UpdateFlight from './pages/Flights/UpdateFlight';
+import MyFlights from './pages/Flights/MyFlights';
+import FlightUserAdd from './pages/Flights/FlightUserAdd';
 
 import Countries from "./pages/Countries/Countries";
 import AddCountries from './pages/Countries/AddCountry';
@@ -29,6 +31,7 @@ import Users from './pages/Users/Users'
 import UpdateUser from './pages/Users/UpdateUser'
 
 import Tickets from './pages/Tickets/Tickets'
+import MyTickets from './pages/Tickets/MyTickets'
 
 import Customers from './pages/Customers/Customers'
 import AddCustomer from './pages/Customers/AddCustomer'
@@ -53,6 +56,8 @@ root.render(
           <Route path="Flights" element={<Flights />} />
           <Route path="AddFlights" element={<AddFlights />} />
           <Route path="UpdateFlight" element={<UpdateFlight />} />
+          <Route path="MyFlights" element={<MyFlights />} />
+          <Route path="FlightUserAdd" element={<FlightUserAdd />} />
 
           {/* countries url */}
           <Route path="Countries" element={<Countries />} />
@@ -71,6 +76,7 @@ root.render(
 
           {/* ticket url */}
           <Route path="Tickets" element={<Tickets />} />
+          <Route path="MyTickets" element={<MyTickets />} />
 
         {/* login and register url */}
           <Route path="Login" element={<Login />} />

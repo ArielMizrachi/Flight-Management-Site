@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 // mui export
 import IconButton from '@mui/material/IconButton';
@@ -10,8 +10,12 @@ import StarsIcon from '@mui/icons-material/Stars';
 import SensorOccupiedIcon from '@mui/icons-material/SensorOccupied';
 
 // reudx export
-import {SelectStaff, SelectSuper} from '../redux/Login/LoginSlice'
-import { useSelector} from 'react-redux'
+import {SelectStaff, SelectSuper, SelectId, SelectToken} from '../redux/Login/LoginSlice'
+import { useSelector, useDispatch} from 'react-redux'
+import {CheckCustomerAsync, MyCustomer, CustomerId, GetOneCustomerAsync} from '../redux/Customer/CustomersSlice'
+import {GetOneUserAsync} from '../redux/Users/UsersSlice'
+
+
 
 // router export
 import { useNavigate } from "react-router-dom";
@@ -19,9 +23,18 @@ import { useNavigate } from "react-router-dom";
 
 const UserIcon = () => {
 
+  const dispatch = useDispatch();
+  let navigate = useNavigate();
+
   const is_staff = useSelector(SelectStaff)
   const is_super = useSelector(SelectSuper)
-  let navigate = useNavigate();
+  const user_id =useSelector(SelectId)
+  const customer_id =useSelector(CustomerId)
+
+  // customer handling
+  const token =useSelector(SelectToken)
+  const customer =useSelector(MyCustomer)
+
 
     // dashboard handling
     const [anchorEl, setAnchorEl] = useState(null)
@@ -33,6 +46,14 @@ const UserIcon = () => {
     const handleClose = () => {
         setAnchorEl(null);
       };
+
+    // checking for customers
+  useEffect(() => {
+    if (token){  
+      dispatch(CheckCustomerAsync())
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
   return (
     <div>
@@ -90,9 +111,8 @@ const UserIcon = () => {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <MenuItem onClick={()=> {handleClose() ;
+                                 navigate(`/MyFlights`)}}>my flights</MenuItem>
       </Menu>
     </Box>
     :
@@ -117,9 +137,23 @@ const UserIcon = () => {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        
+        <MenuItem onClick={()=> {handleClose() ;
+                                 dispatch(GetOneUserAsync(user_id));
+                                 setTimeout(() => navigate(`/UpdateUser`), 50)}}>update user</MenuItem>
+         {customer ? 
+         <Box>                   
+        <MenuItem onClick={()=>{handleClose()
+                                dispatch(GetOneCustomerAsync(customer_id));
+                                setTimeout(() => navigate(`/UpdateCustomer`), 100)}}>update profile</MenuItem>
+
+        <MenuItem onClick={()=>{handleClose() ;
+                                 navigate(`/MyTickets`)}}>MyTickets</MenuItem>
+          </Box>                      
+            :
+        <MenuItem onClick={()=> {handleClose() ;
+                                 navigate(`/AddCustomer`)}}>become a customer</MenuItem>
+         }
       </Menu>
     </Box>
     }

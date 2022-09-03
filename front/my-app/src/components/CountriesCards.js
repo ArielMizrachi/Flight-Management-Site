@@ -12,8 +12,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Grid from '@mui/material/Grid';
 
 // redux
-import {useDispatch} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 import {DeleteCountryAsync, GetOneCountryAsync} from '../redux/Countries/CountriesSlice'
+import {SelectSuper} from '../redux/Login/LoginSlice'
 
 // router
 import { useNavigate } from "react-router-dom";
@@ -24,6 +25,7 @@ export default function CountriesCards({all_countries}) {
 
   const dispatch = useDispatch();
   let navigate = useNavigate();
+  const is_super = useSelector(SelectSuper)
 
   return (
     <div>
@@ -41,6 +43,7 @@ export default function CountriesCards({all_countries}) {
           {country.name}
         </Typography>
       </CardContent>
+    {is_super&&
       <CardActions>
       <Button align='left'
                       variant="contained"
@@ -56,6 +59,7 @@ export default function CountriesCards({all_countries}) {
                         <DeleteIcon />
               </IconButton>
       </CardActions>
+   }  
     </Card>
     </Grid>
     ))}

@@ -32,6 +32,8 @@ export const LoginSlice = createSlice({
     state.username = null
     state.is_staff = null
     state.is_superuser = null
+    state.customer = null
+    
   },
 
   // check the local storage and update the token on refresh
@@ -43,6 +45,8 @@ export const LoginSlice = createSlice({
       state.username = jwt_decode(myToken).username;
       state.is_staff = jwt_decode(myToken).is_staff;
       state.is_superuser = jwt_decode(myToken).is_superuser;
+      state.customer = jwt_decode(myToken).customer;
+
           }
   },
 
@@ -63,6 +67,7 @@ export const LoginSlice = createSlice({
           state.username = jwt_decode(state.token).username;
           state.is_staff = jwt_decode(state.token).is_staff;
           state.is_superuser = jwt_decode(state.token).is_superuser
+          state.customer = jwt_decode(state.token).customer;
 
           // set in local storage
           localStorage.setItem("token", state.token); 
@@ -85,5 +90,5 @@ export const SelectUser = (state) => state.login.username;
 export const SelectStaff = (state) => state.login.is_staff;
 export const SelectSuper = (state) => state.login.is_superuser;
 export const ErrorLoginNRegister = (state) => state.login.error_checker;
-export const {LogOut, CheckLogged, LNRErrorCalibration} = LoginSlice.actions
+export const {LogOut, CheckLogged, LNRErrorCalibration, IsNowACustomer, NotACustomer} = LoginSlice.actions
 export default LoginSlice.reducer;

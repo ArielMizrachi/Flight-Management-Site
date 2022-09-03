@@ -68,9 +68,8 @@ def AddCountries(request):
         except IntegrityError as e:
             print (e)
             if (str(e) == "UNIQUE constraint failed: base_countries.name"):
-                return Response (2)  
+                return Response (2)     
         return Response(999)  
-
 
 # delete country
 @api_view(['DELETE'])

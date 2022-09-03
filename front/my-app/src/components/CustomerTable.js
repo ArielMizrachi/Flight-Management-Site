@@ -16,6 +16,8 @@ import {styled} from '@mui/system';
 // redux
 import {useDispatch} from "react-redux";
 import {GetOneCustomerAsync, DeleteCustomerAsync} from "../redux/Customer/CustomersSlice"
+import {NotACustomer} from "../redux/Customer/CustomersSlice"
+
 
 // router
 import { useNavigate } from "react-router-dom";
@@ -87,7 +89,8 @@ export default function CustomerTable({all_customers}) {
               <IconButton align='left'
                       variant="contained" 
                       color='error' 
-                      onClick={()=>dispatch(DeleteCustomerAsync(customer.id))}>
+                      onClick={()=>{dispatch(DeleteCustomerAsync(customer.id))
+                                    dispatch(NotACustomer())}}>
                         <DeleteIcon />
               </IconButton>
               </TableCell>

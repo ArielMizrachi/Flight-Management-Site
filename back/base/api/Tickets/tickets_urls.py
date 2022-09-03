@@ -6,6 +6,7 @@ urlpatterns = [
     path('', tickets_views.GetRoutes),
     path('GetTickets/', tickets_views.GetTickets),
     path('GetTickets/<id>', tickets_views.GetTickets),
+    path('GetCustomerTickets/', tickets_views.GetCustomerTickets),
     path('AddTickets/', tickets_views.AddTickets),
     path('DelTicets/', tickets_views.DelTicets),
     path('DelTicets/<id>', tickets_views.DelTicets),

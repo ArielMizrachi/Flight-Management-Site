@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 
 // redux
 import {useDispatch, useSelector} from "react-redux";
-import {SelectOneUser, UpdateUserAsync, ErrorUser, UserErrorCalibration} from '../../redux/Users/UsersSlice'
+import {SelectOneUser, UpdateUserAsync, ErrorUser, UserErrorCalibration, DeleteUserAsync} from '../../redux/Users/UsersSlice'
 import {LogOut} from '../../redux/Login/LoginSlice'
 
 // material ui
@@ -17,7 +17,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 // route import
 import {useNavigate} from "react-router-dom";
 
-const UpdateAirlines = () => {
+const UpdateUsers = () => {
 
     let navigate = useNavigate()
     const dispatch = useDispatch();
@@ -44,7 +44,13 @@ const UpdateAirlines = () => {
     useEffect(() => {
         if (error_chk === 'good'){
             dispatch(UserErrorCalibration())
-            navigate("/Users" ,{state:{msg: `airline number ${user.id} was updated successfully` }})
+            navigate("/Users" ,{state:{msg: `user number ${user.id} was updated successfully` }})
+        }
+        // in case of a user delete 
+        if (error_chk === 'deleted'){
+            dispatch(UserErrorCalibration())
+            dispatch(LogOut())
+            navigate("/" ,{state:{msg: `Goodbye fried` }})
         } 
         // in case of 401 
         if (error_chk === 'Please login again'){
@@ -104,7 +110,14 @@ const UpdateAirlines = () => {
                     </Grid>
 
                     <Grid item xs={12} container>
-                        <Grid item xs={10}></Grid>
+                    <Grid item xs={2} >
+                            <Button variant="contained"
+                                    color='error'
+                                    onClick={()=>dispatch(DeleteUserAsync(user.id))}>
+
+                                delete</Button>
+                        </Grid>
+                        <Grid item xs={2} ></Grid>
                         <Grid item xs={2} >
                             <Button variant="contained"
                                 onClick={() => HandleSubmit()}>
@@ -119,6 +132,6 @@ const UpdateAirlines = () => {
     )
 }
 
-export default UpdateAirlines
+export default UpdateUsers
 
 // defaultValue={flight.remaining_ticets}

@@ -1,6 +1,4 @@
 import axios from "axios";
-// import TokenGiver from "../../components/TokenGiver";
-
 
 const MY_SERVER = "http://127.0.0.1:8000/api/customers/";
 let token =  null;
@@ -19,6 +17,21 @@ export function GetOneCustomer(customer_id) {
     .then((res) => resolve({ data: res.data }))
     .catch(error => {resolve({ data: error.response.status })
     }));
+}
+
+// check if customer
+export function IsCustomer() {
+  token =  localStorage.getItem("token");
+  return new Promise((resolve) =>
+    axios(MY_SERVER+'IsCustomer/', {
+      headers: {
+        Authorization: `Bearer ${token} `,
+      },
+    }).then((res) => resolve({ data: res.data }))
+    .catch(error => {
+      resolve({ data: error.response.status })
+    })
+  );
 }
 
   // add a customer

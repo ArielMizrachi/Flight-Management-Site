@@ -34,19 +34,26 @@ json-server --watch db.json --port=3005
 - build mega user button - Done
 - add profile color and menu for diffrent user level - Done
 - build customer - Done
+- add customer log in first thing in the morning - Done
+- fix table flight buy - Done
+- add user update and delete - Done
+- add profile update and delete - Done
+- add tickets  for user - Done
 
 
 #  goals
-- add customer log in first thing in the morning - fix it in app
-- add tickets to airlines for user
-- add tickets to airlines for airlines
+- add  airlines for airlines
+- add permisson (staff, admin, guest, customer, user) -Kinda
 
 
 # maybe  goals
 
-- add permisson (staff, admin, guest, customer, user) -Kinda
+- add a error handler for customer tickets
+- add is customer to the main user table
+- change icon when change level
+- fix customer x login
+- fix the delete 401 error button
 - build another verefication before send (login,flights,countries,airlines)-kinda need to check 
-- add more profil options
 - fix time in update flight
 - fix error handler in site
 - fix update photo

@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 // redux
 import { useSelector, useDispatch } from 'react-redux'
 import {GetFlightsAsync,  AllFlights, } from '../../redux/Flights/FlightSlice'
+import {SelectSuper } from '../../redux/Login/LoginSlice'
 
 // comp
 import FlightTable from '../../components/FlightTable';
@@ -23,6 +24,7 @@ import {useLocation} from "react-router-dom";
 const Flights = () => {
 
   const all_flights =useSelector(AllFlights)
+  const is_super =useSelector(SelectSuper)
   const dispatch = useDispatch()
   const location = useLocation()
 
@@ -35,13 +37,13 @@ const Flights = () => {
   return (
     <div>
       <Grid container spacing={2} >
-
+    {is_super&&
       <Grid item xs={12} container >
          <Button variant="contained" style={{color: 'white', background:'#88B04B', marginTop: 12 }}>
         <Link to="/AddFlights" style={{color: 'white', textDecoration: 'none'}}>add a flight</Link>
         </Button>
       </Grid>
-
+    }
       <Grid item xs={12} container  justifyContent="center" alignItems="center">
          {/* show add and update messages */}
          {location.state &&

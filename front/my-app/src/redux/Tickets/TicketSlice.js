@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import ErrorHandler from '../ErrorHandler'
-import { GetTickets, AddTicket, DeleteTicket} from "./TicketAPI";
+import { GetTickets, AddTicket, DeleteTicket, GetMyTickets} from "./TicketAPI";
 
 
 
@@ -19,6 +19,15 @@ export const GetTicketsAsync = createAsyncThunk(
   "airline/GetTickets",
   async () => {
     const response = await GetTickets();
+    return response.data;
+  }
+);
+
+// get my tickets
+export const MyTicketsAsync = createAsyncThunk(
+  "airline/GetMyTickets",
+  async () => {
+    const response = await GetMyTickets();
     return response.data;
   }
 );
@@ -59,6 +68,11 @@ export const TicketSlice = createSlice({
 
       // gets all tickets
       .addCase(GetTicketsAsync.fulfilled, (state, action) => {
+        state.tickets = action.payload
+      })
+
+      // gets my tickets
+      .addCase(MyTicketsAsync.fulfilled, (state, action) => {
         state.tickets = action.payload
       })
 

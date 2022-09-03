@@ -39,3 +39,11 @@ class FlightsSerializer(serializers.ModelSerializer):
         for flight in Flights.objects.all(): 
             res.append(self.GetFlights(flight))
         return res
+
+
+    def GetMyFlights(self,airline):
+        res=[] 
+        MyFlights = airline.flights_set.all()
+        for flight in MyFlights: 
+            res.append(self.GetFlights(flight))
+        return res    

@@ -18,7 +18,7 @@ import {useDispatch,useSelector} from "react-redux";
 import {DeleteFlightAsync, GetOneFlightAsync} from '../redux/Flights/FlightSlice'
 import {AddTicketAsync, ErrorUser, TicketErrorCalibration} from '../redux/Tickets/TicketSlice'
 import {CheckCustomerAsync, MyCustomer} from '../redux/Customer/CustomersSlice'
-import {SelectToken, SelectSuper} from '../redux/Login/LoginSlice'
+import {SelectToken} from '../redux/Login/LoginSlice'
 
 
 import {LogOut} from '../redux/Login/LoginSlice'
@@ -28,14 +28,13 @@ import { useNavigate } from "react-router-dom";
 
 
 
-export default function FlightTable({all_flights}) {
+export default function MyFlightTable ({all_flights}) {
 
 
 
   const dispatch = useDispatch();
   let navigate = useNavigate();
   const error_chk =useSelector(ErrorUser)
-  const is_super = useSelector(SelectSuper)
   
   // preperations for checking the customer
   const token =useSelector(SelectToken)
@@ -92,8 +91,8 @@ export default function FlightTable({all_flights}) {
             <TableCellHead align='left'>landing time</TableCellHead>
             <TableCellHead align='left'>ticets remaining</TableCellHead>
             {customer&&<TableCell></TableCell>}
-            {is_super && <TableCell></TableCell>}
-            {is_super && <TableCell></TableCell>}
+            <TableCell></TableCell>
+            <TableCell></TableCell>
           </TableRow>
         </TableHead>
 
@@ -126,9 +125,7 @@ export default function FlightTable({all_flights}) {
               
               </TableCell>
              }    
-
               {/* updating a flight */}
-              {is_super &&
               <TableCell align='left'>
               <Button align='left'
                       variant="contained"
@@ -138,9 +135,8 @@ export default function FlightTable({all_flights}) {
                         update
               </Button>              
               </TableCell>
-              }
+
               {/* deleting a flight */}
-              {is_super &&
               <TableCell align='left'>
               <IconButton align='left'
                       variant="contained" 
@@ -149,7 +145,7 @@ export default function FlightTable({all_flights}) {
                         <DeleteIcon />
               </IconButton>
               </TableCell>
-              }
+
             </TableRow>
           ))}
         </TableBody>

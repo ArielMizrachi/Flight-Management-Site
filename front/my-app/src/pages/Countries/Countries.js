@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 // redux
 import { useSelector, useDispatch } from 'react-redux'
 import {GetCountriesAsync, AllCountries} from '../../redux/Countries/CountriesSlice'
+import {SelectSuper } from '../../redux/Login/LoginSlice'
 
 // comp
 import CountriesTable from '../../components/CountriesCards';
@@ -23,6 +24,7 @@ import {useLocation} from "react-router-dom";
 const Countries = () => {
 
   const all_countries =useSelector(AllCountries)
+  const is_super =useSelector(SelectSuper)
   const dispatch = useDispatch()
   const location = useLocation()
 
@@ -37,13 +39,13 @@ const Countries = () => {
 
     <div>
       <Grid container spacing={2} >
-
+    {is_super&&
       <Grid item xs={12} container >
          <Button variant="contained" style={{color: 'white', background:'#88B04B', marginTop: 12 }}>
         <Link to="/AddCountry" style={{color: 'white', textDecoration: 'none'}}>add a country</Link>
         </Button>
       </Grid>
-
+    }
       <Grid item xs={12} container  justifyContent="center" alignItems="center">
          {/* show add and update messages */}
          {location.state &&

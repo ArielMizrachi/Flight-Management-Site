@@ -6,6 +6,7 @@ urlpatterns = [
     path('', customers_views.GetRoutes),
     path('GetCustomers/', customers_views.GetCustomers),
     path('GetCustomers/<id>', customers_views.GetCustomers),
+    path('IsCustomer/', customers_views.IsCustomer),
     path('AddCustomers/', customers_views.AddCustomers),
     path('DelCustomers/', customers_views.DelCustomers),
     path('DelCustomers/<id>', customers_views.DelCustomers),

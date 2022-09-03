@@ -98,10 +98,10 @@ def PutUser(request,id=-1):
            or request.data['email'] == "" ):
             return Response(400)   
         # creation of temp user
+        password = make_password(request.data['password']) 
         temp=User.objects.get(id = id)
-
         temp.username =request.data['username']  
-        temp.password =request.data['password'] 
+        temp.password =password 
         temp.email =request.data['email'] 
         temp.is_staff =request.data['is_staff']    
         temp.save()

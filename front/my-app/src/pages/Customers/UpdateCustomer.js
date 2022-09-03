@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 
 // redux
 import {useDispatch, useSelector} from "react-redux";
-import {SelectOneCustomer, UpdateCustomerAsync, ErrorCustomer, CustomerErrorCalibration} from '../../redux/Customer/CustomersSlice'
+import {SelectOneCustomer, UpdateCustomerAsync, ErrorCustomer, CustomerErrorCalibration, DeleteCustomerAsync, NotACustomer} from '../../redux/Customer/CustomersSlice'
 import {LogOut} from '../../redux/Login/LoginSlice'
 
 // material ui
@@ -43,8 +43,16 @@ const UpdateCustomer = () => {
     useEffect(() => {
         if (error_chk === 'good'){
             dispatch(CustomerErrorCalibration())
-            navigate("/" ,{state:{msg: `customer ${customer.id} was updated successfully` }})
+            navigate("/" ,{state:{msg: `customer ${customer.first_name} was updated successfully` }})
         } 
+
+        // in case of a profile delete 
+        if (error_chk === 'deleted'){
+            dispatch(CustomerErrorCalibration())
+            dispatch(NotACustomer())
+            navigate("/" ,{state:{msg: `Goodbye profile` }})
+        } 
+
         // in case of 401 
         if (error_chk === 'Please login again'){
             dispatch(CustomerErrorCalibration())
@@ -104,8 +112,16 @@ const UpdateCustomer = () => {
                         <TextField id="outlined-basic" variant="outlined" label="credit card" defaultValue={customer.credit_card_no}
                             onChange={(evt) => SetCreditCard(evt.target.value)} />
                     </Grid>
+                    
                     <Grid item xs={12} container>
-                        <Grid item xs={10}></Grid>
+                    <Grid item xs={2} >
+                            <Button variant="contained"
+                                    color='error'
+                                    onClick={()=>dispatch(DeleteCustomerAsync(customer.id))}>
+
+                                delete</Button>
+                        </Grid>
+                        <Grid item xs={2} ></Grid>
                         <Grid item xs={2} >
                             <Button variant="contained"
                                 onClick={() => HandleSubmit()}>

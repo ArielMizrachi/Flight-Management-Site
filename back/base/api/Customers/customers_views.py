@@ -15,6 +15,8 @@ def GetRoutes(request):
         'AddCustomers/',
         'DelCustomers/',
         'PutCustomers/',
+        'IsCustomer/',
+        
     ]
  
     return Response(routes)
@@ -34,12 +36,23 @@ def GetCustomers(request,id=-1):
     else:
         return Response(CustomersSerializer().GetAllCustomers())
   
+  
+# check if he is a customer 
+@api_view(['GET'])
+def IsCustomer(request):
+    user= request.user
+    customer_id = ""
+    if (hasattr(user, 'customers') == True):
+        customer= Customers.objects.get(user = user)
+        customer_id = customer.id
+
+    return Response({'is_cutomer':hasattr(user, 'customers') , 'customer_id' :customer_id})
+
 
 # add customer
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def AddCustomers(request): 
-    print(type(request.data['phone_no']))
+def AddCustomers(request):
     try:
         if(request.data['first_name'] == ""
            or request.data['last_name'] == "" 
@@ -58,16 +71,17 @@ def AddCustomers(request):
         return Response({"POST":request.data['first_name']})
 
     except IntegrityError as e:
-            if (str(e) == "UNIQUE constraint failed: base_customers.user_id"):
-                return Response (2)  
+            print (e)
+            if (str(e) == "UNIQUE constraint failed: base_customers.phone_no"):
+                return Response (1) 
+            if (str(e) == "UNIQUE constraint failed: base_customers.credit_card_no"):
+                return Response (3)      
+            return Response(999)  
 
 # delete customer
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def DelCustomers(request,id=-1):
-    print('5555555555555555555555') 
-    print(id) 
-    print('5555555555555555555555') 
     try:
         temp= Customers.objects.get(id = id)
         temp.delete()
@@ -104,5 +118,10 @@ def PutCustomers(request,id=-1):
             return Response(str(e))    
 
     except IntegrityError as e:
-        return Response(str(e))
+            print (e)
+            if (str(e) == "UNIQUE constraint failed: base_customers.phone_no"):
+                return Response (1) 
+            if (str(e) == "UNIQUE constraint failed: base_customers.credit_card_no"):
+                return Response (3)      
+            return Response(999)  
     

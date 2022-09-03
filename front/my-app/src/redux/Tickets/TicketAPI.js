@@ -18,6 +18,18 @@ export function GetOneTicket(ticket_id) {
   );
 }
 
+// get my tickets
+export function GetMyTickets() {
+  token =  localStorage.getItem("token");
+  return new Promise((resolve) =>
+    axios(MY_SERVER+'GetCustomerTickets/', {
+      headers: {
+        Authorization: `Bearer ${token} `,
+      },
+      }).then((res) => resolve({ data: res.data }))
+  );
+}
+
   // register a ticket
 export function AddTicket(new_ticket) {
   token =  localStorage.getItem("token");

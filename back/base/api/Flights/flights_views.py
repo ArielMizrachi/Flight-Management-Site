@@ -16,6 +16,7 @@ def GetRoutes(request):
         'AddFlights/',
         'DelFlights/',
         'PutFlight/',
+        'GetMyFlights/',
     ]
  
     return Response(routes)
@@ -34,6 +35,17 @@ def GetFlight(request,id=-1):
     else:
         return Response(FlightsSerializer().GetAllFlights())
   
+
+  # getting all of my flights
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def GetMyFlights(request): 
+        user= request.user 
+        airline= Airline_Companies.objects.get(user = user)     
+        try:
+            return Response(FlightsSerializer().GetMyFlights(airline))
+        except ObjectDoesNotExist as e:
+            return Response(str(e))
 
 # adding a flight
 @api_view(['POST'])

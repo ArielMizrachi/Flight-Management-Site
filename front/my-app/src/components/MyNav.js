@@ -10,7 +10,8 @@ import Typography from '@mui/material/Typography';
 // redux
 import {useDispatch, useSelector } from 'react-redux'
 import {LogOut} from '../redux/Login/LoginSlice'
-import { SelectToken} from '../redux/Login/LoginSlice'
+import { SelectToken, SelectSuper} from '../redux/Login/LoginSlice'
+import {NotACustomer} from '../redux/Customer/CustomersSlice'
 
 import UserIcon from './UserIcon';
 
@@ -18,6 +19,7 @@ const MyNav = () => {
 
   const dispatch = useDispatch()
   const token = useSelector(SelectToken)
+  const is_super = useSelector(SelectSuper)
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -30,19 +32,23 @@ const MyNav = () => {
           <Typography color="inherit" sx={{ marginRight: 2 }}>
             <Link style={{textDecoration: 'none'}} to="/">home</Link>
           </Typography>
-
+        {is_super&&
+        
           <Typography color="inherit" sx={{ marginRight: 2 }}>
             <Link style={{textDecoration: 'none'}} to="/Customers">customers</Link>
           </Typography>
-
+        }
+        {is_super&&
           <Typography color="inherit" sx={{ marginRight: 2 }}>
             <Link style={{textDecoration: 'none'}} to="/Users">users</Link>
           </Typography>
-
+          }
+          {is_super&&
           <Typography color="inherit" sx={{ marginRight: 2 }}>
             <Link style={{textDecoration: 'none'}} to="/Tickets">tickets</Link>
           </Typography>
-
+          
+          }
           <Typography  color="inherit" sx={{ marginRight: 2 }}>
             <Link style={{textDecoration: 'none'}} to="/Countries">Countries</Link>
           </Typography>
@@ -58,7 +64,10 @@ const MyNav = () => {
           {/* checking if looged in */}
           {token?
           <Typography color="inherit">
-            <Link style={{textDecoration: 'none'}} to="/" onClick={()=>setTimeout(() =>dispatch(LogOut()),200)}>sign out</Link>
+            <Link style={{textDecoration: 'none'}} to="/" onClick={()=>{dispatch(NotACustomer())
+                                                                        setTimeout(() =>dispatch(LogOut()),200)}}>
+            sign out
+            </Link>
           </Typography>
             :     
           <Typography color="inherit" >

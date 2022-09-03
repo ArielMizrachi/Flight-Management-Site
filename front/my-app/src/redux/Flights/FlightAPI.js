@@ -13,8 +13,21 @@ export function GetFlights() {
 
 // get one flight
 export function GetOneFlight(flight_id) {
+  token =  localStorage.getItem("token");
+
   return new Promise((resolve) =>
     axios(MY_SERVER+'GetFlight/'+flight_id).then((res) => resolve({ data: res.data }))
+  );
+}
+
+// get my flights
+export function GetMyFlights() {
+  token =  localStorage.getItem("token");
+  return new Promise((resolve) =>
+    axios(MY_SERVER+'GetMyFlights/', {
+      headers: {
+        Authorization: `Bearer ${token} `,
+      },}).then((res) => resolve({ data: res.data }))
   );
 }
 

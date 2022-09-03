@@ -119,6 +119,7 @@ export const UserSlice = createSlice({
       // delete from list
       .addCase(DeleteUserAsync.fulfilled, (state, action) => {
         state.users = state.users.filter(users=> users.id !==  action.payload);
+        state.error_checker='deleted'
     })
       
     

@@ -48,7 +48,6 @@ export default function AirlineTable({all_tickets}) {
             <TableCellHead align='left'>destenation country</TableCellHead>
             <TableCellHead align='left'>customer</TableCellHead>
             <TableCell></TableCell>
-            <TableCell></TableCell>
           </TableRow>
         </TableHead>
 
@@ -60,7 +59,6 @@ export default function AirlineTable({all_tickets}) {
                           background: ind%2 ===0 ? '#d9eefa' : ''
                           }}>
               <TableCell component="th" scope="row">{ticket.id}</TableCell>
-              <TableCell align='left'>{ticket.id}</TableCell>
               <TableCell align='left'>{ticket.flight}</TableCell>
               <TableCell align='left'>{ticket.origin_country}</TableCell>
               <TableCell align='left'>{ticket.destenation_country}</TableCell>

@@ -11,11 +11,15 @@ let  msg = ''
     return (msg)
 }
 if (number === 1){
-  msg= 'please insert a file.'
+  msg= 'there is already a phone like that.'
   return (msg)
 }
   if (number === 2){
   msg= 'there is already a name like that.'
+  return (msg)
+}
+if (number === 3){
+  msg= 'how did you get that?.'
   return (msg)
 }
   if (number === 999){

@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import {AddCustomerAsync, ErrorCustomer, CustomerErrorCalibration} from '../../redux/Customer/CustomersSlice'
 import {useDispatch, useSelector} from "react-redux";
 import {LogOut} from '../../redux/Login/LoginSlice'
+import {IsNowACustomer} from '../../redux/Customer/CustomersSlice'
 
 // router import
 import { useNavigate } from "react-router-dom";
@@ -41,6 +42,7 @@ const AddCustomer = () => {
     useEffect(() => {
         if (error_chk === 'good'){
             dispatch(CustomerErrorCalibration())
+            dispatch(IsNowACustomer())
             navigate("/" ,{state:{msg: `Welcome our new customer ${first_name} ` }})
         } 
         // in case of 401 

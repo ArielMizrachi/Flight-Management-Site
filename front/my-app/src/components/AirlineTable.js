@@ -13,9 +13,12 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {styled} from '@mui/system';
 
+
 // redux
-import {useDispatch} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 import {GetOneAirlineAsync, DeleteAirlineAsync} from "../redux/Airlines/AirlineSlice"
+import {SelectSuper} from "../redux/Login/LoginSlice"
+
 
 // router
 import { useNavigate } from "react-router-dom";
@@ -28,6 +31,7 @@ export default function AirlineTable({all_airlines}) {
 
   const dispatch = useDispatch();
   let navigate = useNavigate();
+  const is_super = useSelector(SelectSuper)
 
   // custom table head color
   const TableCellHead = styled(TableCell)({
@@ -51,8 +55,8 @@ export default function AirlineTable({all_airlines}) {
             <TableCellHead align='left'>comany name</TableCellHead>
             <TableCellHead align='left'>origin country</TableCellHead>
             <TableCellHead align='left'>creating user</TableCellHead>
-            <TableCell></TableCell>
-            <TableCell></TableCell>
+            {is_super && <TableCell></TableCell>}
+            {is_super && <TableCell></TableCell>}
           </TableRow>
         </TableHead>
 
@@ -67,6 +71,7 @@ export default function AirlineTable({all_airlines}) {
               <TableCell align='left'>{airline.name}</TableCell>
               <TableCell align='left'>{airline.country}</TableCell>
               <TableCell align='left'>{airline.user}</TableCell>
+              {is_super &&            
               <TableCell align='left'>
               <Button align='left'
                       variant="contained"
@@ -75,8 +80,10 @@ export default function AirlineTable({all_airlines}) {
                                     setTimeout(() => navigate(`/UpdateAirline`), 50)}}>
                         update
               </Button>
-              
               </TableCell>
+              }
+              {is_super && 
+             
               <TableCell align='left'>
               <IconButton align='left'
                       variant="contained" 
@@ -85,6 +92,7 @@ export default function AirlineTable({all_airlines}) {
                         <DeleteIcon />
               </IconButton>
               </TableCell>
+                }
             </TableRow>
           ))}
         </TableBody>
