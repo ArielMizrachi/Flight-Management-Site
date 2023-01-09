@@ -39,7 +39,7 @@ export const LoginSlice = createSlice({
   // check the local storage and update the token on refresh
   CheckLogged: (state,action)=>{
     let myToken = localStorage.getItem("token");  
-    if (myToken !== 'null') {
+    if (String(myToken) !== 'null') {
       state.token = myToken;
       state.id = jwt_decode(myToken).id;
       state.username = jwt_decode(myToken).username;
